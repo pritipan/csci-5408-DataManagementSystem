@@ -11,11 +11,10 @@ import java.util.regex.Pattern;
 public class QueryParser {
 
     public static void main(String[] arg) throws IOException {
-        CreateParser("create table student(id int NOT NULL, name varchar(45), name varchar(45), PRIMARY KEY(id));", "demo");
+
     }
 
     public static void CreateParser(String query, String dbName) {
-        //String createRegex = "CREATE TABLE\\s(\\w+)[(]((((\\w+)\\s(varchar[(]\\d+[)]|int))(,)*\\s*)+)[)];";
         String createRegex = "CREATE TABLE\\s(\\w+)[(]((((\\w+)\\s(varchar[(]\\d+[)]|int)*\\s*(?:NOT\\sNULL)?)(,)*\\s*)+)(?:,\\sPRIMARY KEY[(](\\w+)[)])?[)];";
 
         Pattern syntaxExp = Pattern.compile(createRegex, Pattern.CASE_INSENSITIVE);
@@ -23,6 +22,7 @@ public class QueryParser {
         if (queryParts.find()) {
             String tableName = queryParts.group(1);
             String columns = queryParts.group(2);
+            columns = columns.toLowerCase(Locale.ROOT);
             String primaryKey = queryParts.group(8);
             List<String> valuesPart = Arrays.asList(columns.split(", "));
             List<String> valuesPartTemp = new ArrayList<>();
@@ -39,9 +39,14 @@ public class QueryParser {
                 }
                 PrintWriter printWriter = null;
                 try {
-                    printWriter = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/main/java/Files/Database/METADATA_" + dbName.trim().toUpperCase(Locale.ROOT) + ".txt"), true)));
-                    printWriter.println(tableName + " || " + columns + " || " + primaryKey);
-                    printWriter.close();
+                    if(checkTableExist(tableName,"src/main/java/Files/Database/METADATA_" + dbName.trim().toUpperCase(Locale.ROOT) + ".txt")){
+                        System.out.println("Table already exist");
+                    }else{
+                        printWriter = new PrintWriter(new BufferedWriter(new FileWriter(new File("src/main/java/Files/Database/METADATA_" + dbName.trim().toUpperCase(Locale.ROOT) + ".txt"), true)));
+                        printWriter.println(tableName + " || " + columns + " || " + primaryKey);
+                        printWriter.close();
+                        System.out.println("Table successfully created!!");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -53,7 +58,7 @@ public class QueryParser {
         }
     }
 
-    public Boolean CreateSchemaParser(String query) throws IOException {
+    public static Boolean CreateSchemaParser(String query) throws IOException {
         String createRegex = "CREATE DATABASE\\s(\\w+);";
         Pattern syntaxExp = Pattern.compile(createRegex, Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
@@ -82,5 +87,17 @@ public class QueryParser {
             dbName = "Invalid";
         }
         return dbName;
+    }
+
+    static boolean checkTableExist(String name, String file) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] parts = line.split(" \\|\\| ");
+            if (name.equals(parts[0].trim())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

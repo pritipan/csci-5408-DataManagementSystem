@@ -1,10 +1,7 @@
 package Query;
 
-import Basic.FeatureMenu;
-
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class CheckQuery {
     QueryParser queryParser = new QueryParser();

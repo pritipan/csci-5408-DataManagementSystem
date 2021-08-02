@@ -1,1 +1,1 @@
-student || id int NOT NULL, name varchar(45), name varchar(45) || id
+student || id int not null, name varchar(45), name varchar(45) || id
