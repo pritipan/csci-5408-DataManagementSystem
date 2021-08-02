@@ -4,19 +4,14 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Login {
+    private final Scanner scanner;
     File file;
-    private String username;
-    private String password;
-    private String rePassword;
-    private String answer;
-    private Scanner scanner;
 
     public Login() {
         scanner = new Scanner(System.in);
         System.out.println("----------- WELCOME -----------");
         file = new File("src/main/java/Files/Authentication/LoginInfo.txt");
     }
-
 
     void display() throws IOException {
         System.out.println("----------- CHOOSE -----------");
@@ -30,22 +25,22 @@ public class Login {
         switch (choose) {
             case "1":
                 System.out.print("Enter your username: ");
-                username = scanner.nextLine();
+                String username = scanner.nextLine();
                 System.out.print("Enter your password: ");
-                password = scanner.nextLine();
+                String password = scanner.nextLine();
                 System.out.print("What is favourite car? ");
-                answer = scanner.nextLine();
+                String answer = scanner.nextLine();
                 readLoginInfo(username, password, answer);
                 break;
             case "2":
-                do{
+                do {
                     System.out.print("Username: ");
                     username = scanner.nextLine();
-                    if(checkUser(username)){
+                    if (checkUser(username)) {
                         System.out.println("User already Exist!! PLease Basic.Login...\n");
                         display();
                     }
-                }while (checkUser(username));
+                } while (checkUser(username));
                 String temp = "";
                 do {
                     System.out.print("Password: ");
@@ -53,7 +48,7 @@ public class Login {
                     String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
                     if (password.matches(passwordRegex)) {
                         System.out.print("Re-conform password: ");
-                        rePassword = scanner.nextLine();
+                        String rePassword = scanner.nextLine();
                         if (rePassword.equals(password)) {
                             System.out.print("What is favourite car? ");
                             answer = scanner.nextLine();
@@ -80,7 +75,7 @@ public class Login {
     void readLoginInfo(String username, String password, String answer) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line;
-        Boolean check = false;
+        boolean check = false;
         while ((line = bufferedReader.readLine()) != null) {
             String[] parts = line.split(" \\|\\| ");
             for (int i = 0; i < parts.length; i++) {
@@ -114,9 +109,9 @@ public class Login {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] parts = line.split(" \\|\\| ");
-            for (int i = 0; i < parts.length; i++) {
+            for (String part : parts) {
                 try {
-                    if (username.equals(parts[i].trim())) {
+                    if (username.equals(part.trim())) {
                         return true;
                     }
                 } catch (Exception e) {
@@ -126,8 +121,8 @@ public class Login {
         }
         return false;
     }
-    void callMenu(String username) throws IOException {
-        FeatureMenu featureMenu = new FeatureMenu();
-        featureMenu.menu(username,null);
+
+    void callMenu(String username) {
+        FeatureMenu.menu(username);
     }
 }

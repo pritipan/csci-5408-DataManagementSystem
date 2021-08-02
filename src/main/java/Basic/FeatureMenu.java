@@ -1,28 +1,21 @@
 package Basic;
 
-import Query.CheckQuery;
-
-import java.io.IOException;
 import java.util.Scanner;
 
+import static Query.CheckQuery.checkType;
+
 public class FeatureMenu {
-    private static Scanner scanner=new Scanner(System.in);
-    private static CheckQuery checkQuery= new CheckQuery();
-    private static String sqlQuery = "";
-    private static boolean flag=true;
+    private static final Scanner scanner = new Scanner(System.in);
+    public static String DATABASE_NAME;
+    private static boolean flag = true;
 
-    public static void main(String[] arg) throws IOException {
-        menu("Foram",null);
+    public static void main(String[] arg) {
+        System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
+        menu("Test");
     }
 
-    public FeatureMenu() {
-        System.out.println("-----------------------------------------");
-        System.out.println("----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------");
-        System.out.println("----------------------------------------");
-    }
-
-    public static void menu(String username, String dbName) throws IOException {
-        do{
+    public static void menu(String username) {
+        do {
             if (username != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
                 System.out.println("1. Enter Query");
@@ -35,24 +28,24 @@ public class FeatureMenu {
                 switch (userInput) {
                     case "1":
                         System.out.print("Enter a SQL query: ");
-                        sqlQuery = scanner.nextLine();
-                        checkQuery.checkType(sqlQuery,username);
+                        String sqlQuery = scanner.nextLine();
+                        checkType(sqlQuery);
                         break;
                     case "2":
-
+                        System.out.println(" DUMP of DB : " + DATABASE_NAME);
                         break;
                     case "3":
-
+                        System.out.println(" ERD of DB : " + DATABASE_NAME);
                         break;
                     case "4":
-
+                        System.out.println(" STATE of DB : " + DATABASE_NAME);
                         break;
                     case "5":
-                        flag=false;
+                        flag = false;
                         System.exit(0);
                         break;
                 }
             }
-        }while(flag);
+        } while (flag);
     }
 }
