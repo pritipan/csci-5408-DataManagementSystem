@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static Basic.FeatureMenu.DATABASE_NAME;
+import static Basic.LogGenerator.logQueryExecute;
+import static Basic.Message.display;
 import static Query.MetadataHandle.*;
 
 public class QueryParser {
@@ -27,7 +29,8 @@ public class QueryParser {
 
             if (tableName != null) {
                 if (checkTableExist(tableName)) {
-                    System.out.println("Table already exist");
+                    display("Table already exist");
+                    logQueryExecute(query,"Table already exist");
                 } else {
                     columns = columns.toLowerCase();
 
@@ -39,7 +42,8 @@ public class QueryParser {
                             if (!valuesPartTemp.contains(temp[0].trim().toLowerCase())) {
                                 valuesPartTemp.add(temp[0].trim().toLowerCase());
                             } else {
-                                System.out.println("Column name should not be same.");
+                                display("Column name should not be same.");
+                                logQueryExecute(query,"Column name should not be same.");
                                 return;
                             }
                         }
@@ -54,7 +58,8 @@ public class QueryParser {
                             if (valuesPartTemp.contains(primaryKey.trim().toLowerCase())) {
                                 tableMeta += " || " + primaryKey.trim().trim().toLowerCase();
                             } else {
-                                System.out.println("Primary key must be from one of the columns.");
+                                display("Primary key must be from one of the columns.");
+                                logQueryExecute(query,"Primary key must be from one of the columns.");
                                 return;
                             }
                         }
@@ -66,20 +71,24 @@ public class QueryParser {
                                     printWriter.println(tableMeta);
                                     printWriter.close();
                                 }
-                                System.out.println("Table successfully created.");
+                                display("Table successfully created.");
+                                logQueryExecute(query,"Table successfully created.");
                             }
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else {
-                        System.out.println("Atleast one column is required.");
+                        display("Atleast one column is required.");
+                        logQueryExecute(query,"Atleast one column is required.");
                     }
                 }
             } else {
-                System.out.println("Table name cannot be null.");
+                display("Table name cannot be null.");
+                logQueryExecute(query,"Table name cannot be null.");
             }
         } else {
-            System.out.println("Invalid query");
+            display("Invalid query");
+            logQueryExecute(query,"Invalid query");
         }
     }
 
@@ -91,6 +100,8 @@ public class QueryParser {
             String dbName = queryParts.group(1);
             CreateDb createDb = new CreateDb();
             createDb.create(dbName);
+            display("Database " + dbName.trim() + " created successfully.");
+            logQueryExecute(query,"Database " + dbName.trim() + " created successfully.");
             return true;
         }
         return false;
@@ -123,18 +134,21 @@ public class QueryParser {
                                     if (pk.equals(columnName[i].trim().toLowerCase())) {
                                         if (valueName[i] != null && valueName[i].trim().length() != 0) {
                                             if (!primaryKeyValues.isEmpty() && primaryKeyValues.contains(valueName[i])) {
-                                                System.out.println("Duplicate value not allowed in primary key column.");
+                                                display("Duplicate value not allowed in primary key column.");
+                                                logQueryExecute(query,"Duplicate value not allowed in primary key column.");
                                                 return;
                                             }
                                         } else {
-                                            System.out.println("Primary Key value should not be null or empty.");
+                                            display("Primary Key value should not be null or empty.");
+                                            logQueryExecute(query,"Primary Key value should not be null or empty.");
                                             return;
                                         }
                                     }
                                 }
                                 nameValueMap.put(columnName[i].trim().toLowerCase(), valueName[i].trim());
                             } else {
-                                System.out.println("Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
+                                display("Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
+                                logQueryExecute(query,"Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
                                 return;
                             }
                         }
@@ -149,22 +163,27 @@ public class QueryParser {
                                 insertData = new StringBuilder(insertData.substring(0, insertData.length() - 4));
                                 printWriter.println(insertData);
                                 printWriter.close();
-                                System.out.println("1 Row inserted.");
+                                display("1 Row inserted.");
+                                logQueryExecute(query,"1 Row inserted.");
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
                         }
                     } else {
-                        System.out.println("Number of columns and values are not same.");
+                        display("Number of columns and values are not same.");
+                        logQueryExecute(query,"Number of columns and values are not same.");
                     }
                 } else {
-                    System.out.println("Table does not exist.");
+                    display("Table does not exist.");
+                    logQueryExecute(query,"Table does not exist.");
                 }
             } else {
-                System.out.println("Table name cannot be null.");
+                display("Table name cannot be null.");
+                logQueryExecute(query,"Table name cannot be null.");
             }
         } else {
-            System.out.println("Invalid query");
+            display("Invalid query");
+            logQueryExecute(query,"Invalid query");
         }
     }
 
