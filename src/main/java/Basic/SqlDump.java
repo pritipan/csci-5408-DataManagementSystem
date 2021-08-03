@@ -12,8 +12,8 @@ public class SqlDump {
 
     public static void generateDump() {
         List<String> tableNames = new ArrayList<>();
-        String metadataName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
-        String dumpName = "src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_DUMP.txt";
+        String metadataName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+        String dumpName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_DUMP.txt";
         PrintWriter printWriter;
         try {
             printWriter = new PrintWriter(new BufferedWriter(new FileWriter(dumpName)));
@@ -33,7 +33,7 @@ public class SqlDump {
             printWriter.println();
 
             for (String tableName : tableNames) {
-                String tableNameFile = "src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                String tableNameFile = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
                 printWriter.println("TABLE : " + tableName.trim().toUpperCase());
                 Scanner scanner = new Scanner(new FileReader(tableNameFile));
                 bufferedReader = new BufferedReader(new FileReader(tableNameFile));

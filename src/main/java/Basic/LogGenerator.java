@@ -9,7 +9,7 @@ import static Basic.Login.USERNAME;
 public class LogGenerator {
 
     public static void logQueryExecute(String query, String message){
-        File file = new File("src/main/java/Files/logs.txt");
+        File file = new File("src/main/java/FileStorage/logs.txt");
         PrintWriter printWriter;
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
