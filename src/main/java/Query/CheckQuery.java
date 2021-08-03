@@ -1,18 +1,13 @@
 package Query;
 
-import java.util.Locale;
+import static Basic.FeatureMenu.DATABASE_NAME;
+import static Query.QueryParser.*;
 
 public class CheckQuery {
-    QueryParser queryParser = new QueryParser();
-    boolean useDatabase = false;
-    String dbName;
+    static boolean useDatabase = false;
 
-    public void errorMessage(String message) {
-        System.out.println(message);
-    }
-
-    public boolean checkType(String query, String username) {
-        String temp = query.toLowerCase(Locale.ROOT);
+    public static void checkType(String query) {
+        String temp = query.toLowerCase();
         String[] divideQuery = temp.split(" ");
         switch (divideQuery[0]) {
             case "select":
@@ -25,10 +20,10 @@ public class CheckQuery {
             case "create":
                 if (useDatabase) {
                     System.out.println(divideQuery[0]);
-                    QueryParser.CreateParser(query, dbName);
+                    CreateParser(query);
                 } else {
                     if (divideQuery[1].equals("database")) {
-                        if (!QueryParser.CreateSchemaParser(query)) {
+                        if (!CreateSchemaParser(query)) {
                             System.out.println("Invalid Query !!");
                         }
                     } else {
@@ -37,18 +32,18 @@ public class CheckQuery {
                 }
                 break;
             case "use":
-                dbName = queryParser.UseDatabase(query);
-                if (dbName == null) {
+                DATABASE_NAME = UseDatabase(query);
+                if (DATABASE_NAME == null) {
                     System.out.println("PLease create database first!! As no such database exist in the system.");
-                } else if (dbName == "Invalid") {
-                    System.out.println("Invalid Query !!");
                 } else {
-                    System.out.println("You can work on database: " + dbName.toUpperCase(Locale.ROOT));
+                    System.out.println("You can work on database: " + DATABASE_NAME.toUpperCase());
                     useDatabase = true;
                 }
                 break;
             case "insert":
                 if (useDatabase) {
+                    System.out.println("db " + DATABASE_NAME);
+                    //InsertParser(query, dbName);
                     System.out.println(divideQuery[0]);
                 } else {
                     errorMessage("Please select database first!!");
@@ -56,31 +51,31 @@ public class CheckQuery {
                 break;
             case "update":
                 if (useDatabase) {
-                    System.out.println(divideQuery[0]);
+                    System.out.println("UPDATE : " + divideQuery[0]);
                 } else {
                     errorMessage("Please select database first!!");
                 }
                 break;
             case "drop":
                 if (useDatabase) {
-                    System.out.println(divideQuery[0]);
+                    System.out.println("DROP : " + divideQuery[0]);
                 } else {
                     errorMessage("Please select database first!!");
                 }
                 break;
             case "delete":
                 if (useDatabase) {
-                    System.out.println(divideQuery[0]);
+                    System.out.println("DELETE : " + divideQuery[0]);
                 } else {
                     errorMessage("Please select database first!!");
                 }
                 break;
             default:
                 System.out.println("Invalid Query !!");
-                return false;
         }
-        return true;
     }
 
-
+    public static void errorMessage(String message) {
+        System.out.println(message);
+    }
 }

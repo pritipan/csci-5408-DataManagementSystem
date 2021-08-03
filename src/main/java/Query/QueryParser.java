@@ -5,16 +5,17 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static Basic.FeatureMenu.DATABASE_NAME;
 import static Query.MetadataHandle.*;
 
 public class QueryParser {
 
     public static void main(String[] arg) {
         //CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));", "demo");
-        InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
+        //InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
     }
 
-    public static void CreateParser(String query, String dbName) {
+    public static void CreateParser(String query) {
         String createRegex = "CREATE TABLE\\s(\\w+)[(]((((\\w+)\\s(varchar[(]\\d+[)]|int)*\\s*(?:NOT\\sNULL)?)(,)*\\s*)+)(?:,\\sPRIMARY KEY[(](\\w+)[)])?[)];";
 
         Pattern syntaxExp = Pattern.compile(createRegex, Pattern.CASE_INSENSITIVE);
@@ -25,7 +26,7 @@ public class QueryParser {
             String primaryKey = queryParts.group(8);
 
             if (tableName != null) {
-                if (checkTableExist(tableName, dbName)) {
+                if (checkTableExist(tableName)) {
                     System.out.println("Table already exist");
                 } else {
                     columns = columns.toLowerCase();
@@ -44,7 +45,7 @@ public class QueryParser {
                         }
                         PrintWriter printWriter = null;
                         try {
-                            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/METADATA_" + dbName.trim().toUpperCase() + ".txt", true)));
+                            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt", true)));
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
@@ -57,18 +58,18 @@ public class QueryParser {
                                 return;
                             }
                         }
-                        if (printWriter != null) {
-                            File tableFile = new File("src/main/java/Files/Database/" + dbName.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
-                            try {
-                                boolean isCreated = tableFile.createNewFile();
-                                if (isCreated) {
+                        File tableFile = new File("src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+                        try {
+                            boolean isCreated = tableFile.createNewFile();
+                            if (isCreated) {
+                                if (printWriter != null) {
                                     printWriter.println(tableMeta);
                                     printWriter.close();
-                                    System.out.println("Table successfully created.");
                                 }
-                            } catch (IOException ioException) {
-                                ioException.printStackTrace();
+                                System.out.println("Table successfully created.");
                             }
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
                         }
                     } else {
                         System.out.println("Atleast one column is required.");
@@ -95,14 +96,14 @@ public class QueryParser {
         return false;
     }
 
-    static void InsertParser(String query, String dbName) {
+    static void InsertParser(String query) {
         String insertRegex = "INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
         Pattern syntaxExp = Pattern.compile(insertRegex, Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
         if (queryParts.find()) {
             String tableName = queryParts.group(1);
             if (tableName != null) {
-                if (checkTableExist(tableName, dbName)) {
+                if (checkTableExist(tableName)) {
                     String columns = queryParts.group(2);
                     columns = columns.substring(1, queryParts.group(2).length() - 1);
                     String[] columnName = columns.split(",");
@@ -113,9 +114,9 @@ public class QueryParser {
 
                     if (columnName.length == valueName.length) {
                         Map<String, String> nameValueMap = new HashMap<>();
-                        List<String> columnsNameList = getColumnsNameList(queryParts.group(1), dbName);
-                        String pk = getPrimaryKey(tableName, dbName);
-                        List<String> primaryKeyValues = getPrimaryKeyValues(tableName, dbName);
+                        List<String> columnsNameList = getColumnsNameList(queryParts.group(1));
+                        String pk = getPrimaryKey(tableName);
+                        List<String> primaryKeyValues = getPrimaryKeyValues(tableName);
                         for (int i = 0; i < columnName.length; i++) {
                             if (columnsNameList.contains(columnName[i].trim().toLowerCase())) {
                                 if (pk != null) {
@@ -140,7 +141,7 @@ public class QueryParser {
                         if (!nameValueMap.keySet().isEmpty()) {
                             PrintWriter printWriter;
                             try {
-                                printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/" + dbName.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt", true)));
+                                printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt", true)));
                                 StringBuilder insertData = new StringBuilder();
                                 for (String colName : nameValueMap.keySet()) {
                                     insertData.append(colName).append(":").append(nameValueMap.get(colName)).append(" || ");
@@ -167,20 +168,15 @@ public class QueryParser {
         }
     }
 
-    public String UseDatabase(String query) {
+    public static String UseDatabase(String query) {
         String useRegex = "USE DATABASE\\s(\\w+);";
-        String dbName = "";
+        String dbName = null;
         Pattern syntaxExp = Pattern.compile(useRegex, Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
         if (queryParts.find()) {
             dbName = queryParts.group(1);
             UseDb useDb = new UseDb();
             dbName = useDb.checkDb(dbName);
-            if (dbName == null) {
-                dbName = null;
-            }
-        } else {
-            dbName = "Invalid";
         }
         return dbName;
     }

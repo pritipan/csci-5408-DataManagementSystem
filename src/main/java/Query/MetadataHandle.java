@@ -6,14 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Basic.FeatureMenu.DATABASE_NAME;
+
 
 public class MetadataHandle {
-    public static void main(String[] arg) throws IOException {
+    public static void main(String[] arg) {
         //getColumnsNameList("student", "demo");
     }
 
-    static boolean checkTableExist(String tableName, String databaseName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + databaseName.trim().toUpperCase() + ".txt";
+    static boolean checkTableExist(String tableName) {
+        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String line;
@@ -30,8 +32,8 @@ public class MetadataHandle {
         return false;
     }
 
-    static List<String> getColumnsNameList(String tableName, String databaseName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + databaseName.trim().toUpperCase() + ".txt";
+    static List<String> getColumnsNameList(String tableName) {
+        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         List<String> columnNameArray = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -51,8 +53,8 @@ public class MetadataHandle {
         return columnNameArray;
     }
 
-    static String getPrimaryKey(String tableName, String databaseName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + databaseName.trim().toUpperCase() + ".txt";
+    static String getPrimaryKey(String tableName) {
+        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         String primaryKey = null;
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -72,11 +74,11 @@ public class MetadataHandle {
         return primaryKey;
     }
 
-    static List<String> getPrimaryKeyValues(String tableName, String databaseName) {
+    static List<String> getPrimaryKeyValues(String tableName) {
         List<String> pkValues = new ArrayList<>();
-        String primaryKey = getPrimaryKey(tableName, databaseName);
+        String primaryKey = getPrimaryKey(tableName);
         if (primaryKey != null) {
-            String fileName = "src/main/java/Files/Database/" + databaseName.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+            String fileName = "src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
             try {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
                 String line;
