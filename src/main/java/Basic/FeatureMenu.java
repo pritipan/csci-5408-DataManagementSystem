@@ -18,7 +18,7 @@ public class FeatureMenu {
         do {
             if (username != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
-                System.out.println("1. Enter Query");
+                System.out.println("1. Query to Execute");
                 System.out.println("2. SQL Dump");
                 System.out.println("3. Generate ERD");
                 System.out.println("4. Generate data dictionary");
