@@ -28,7 +28,6 @@ public class MetadataHandle {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-
         return false;
     }
 
@@ -53,7 +52,7 @@ public class MetadataHandle {
         return columnNameArray;
     }
 
-    static String getPrimaryKey(String tableName) {
+    public static String getPrimaryKey(String tableName) {
         String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         String primaryKey = null;
         try {

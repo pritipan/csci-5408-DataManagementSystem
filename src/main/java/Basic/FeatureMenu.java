@@ -2,6 +2,7 @@ package Basic;
 
 import java.util.Scanner;
 
+import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
 
 public class FeatureMenu {
@@ -32,7 +33,7 @@ public class FeatureMenu {
                         checkType(sqlQuery);
                         break;
                     case "2":
-                        System.out.println(" DUMP of DB : " + DATABASE_NAME);
+                        generateDump();
                         break;
                     case "3":
                         System.out.println(" ERD of DB : " + DATABASE_NAME);
