@@ -1,6 +1,9 @@
 package Query;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +18,9 @@ public class QueryParser {
     public static void main(String[] arg) {
         //CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));", "demo");
         //InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
+        DATABASE_NAME = "demo";
+        AlterParser("alter table student add foreign key(id) references grade(id);");
+
     }
 
     public static void CreateParser(String query) {
@@ -30,7 +36,7 @@ public class QueryParser {
             if (tableName != null) {
                 if (checkTableExist(tableName)) {
                     display("Table already exist");
-                    logQueryExecute(query,"Table already exist");
+                    logQueryExecute(query, "Table already exist");
                 } else {
                     columns = columns.toLowerCase();
 
@@ -43,13 +49,13 @@ public class QueryParser {
                                 valuesPartTemp.add(temp[0].trim().toLowerCase());
                             } else {
                                 display("Column name should not be same.");
-                                logQueryExecute(query,"Column name should not be same.");
+                                logQueryExecute(query, "Column name should not be same.");
                                 return;
                             }
                         }
                         PrintWriter printWriter = null;
                         try {
-                            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt", true)));
+                            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt", true)));
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
@@ -59,11 +65,11 @@ public class QueryParser {
                                 tableMeta += " || " + primaryKey.trim().trim().toLowerCase();
                             } else {
                                 display("Primary key must be from one of the columns.");
-                                logQueryExecute(query,"Primary key must be from one of the columns.");
+                                logQueryExecute(query, "Primary key must be from one of the columns.");
                                 return;
                             }
                         }
-                        File tableFile = new File("src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+                        File tableFile = new File("src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
                         try {
                             boolean isCreated = tableFile.createNewFile();
                             if (isCreated) {
@@ -72,23 +78,23 @@ public class QueryParser {
                                     printWriter.close();
                                 }
                                 display("Table successfully created.");
-                                logQueryExecute(query,"Table successfully created.");
+                                logQueryExecute(query, "Table successfully created.");
                             }
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     } else {
                         display("Atleast one column is required.");
-                        logQueryExecute(query,"Atleast one column is required.");
+                        logQueryExecute(query, "Atleast one column is required.");
                     }
                 }
             } else {
                 display("Table name cannot be null.");
-                logQueryExecute(query,"Table name cannot be null.");
+                logQueryExecute(query, "Table name cannot be null.");
             }
         } else {
             display("Invalid query");
-            logQueryExecute(query,"Invalid query");
+            logQueryExecute(query, "Invalid query");
         }
     }
 
@@ -101,7 +107,7 @@ public class QueryParser {
             CreateDb createDb = new CreateDb();
             createDb.create(dbName);
             display("Database " + dbName.trim() + " created successfully.");
-            logQueryExecute(query,"Database " + dbName.trim() + " created successfully.");
+            logQueryExecute(query, "Database " + dbName.trim() + " created successfully.");
             return true;
         }
         return false;
@@ -135,12 +141,12 @@ public class QueryParser {
                                         if (valueName[i] != null && valueName[i].trim().length() != 0) {
                                             if (!primaryKeyValues.isEmpty() && primaryKeyValues.contains(valueName[i])) {
                                                 display("Duplicate value not allowed in primary key column.");
-                                                logQueryExecute(query,"Duplicate value not allowed in primary key column.");
+                                                logQueryExecute(query, "Duplicate value not allowed in primary key column.");
                                                 return;
                                             }
                                         } else {
                                             display("Primary Key value should not be null or empty.");
-                                            logQueryExecute(query,"Primary Key value should not be null or empty.");
+                                            logQueryExecute(query, "Primary Key value should not be null or empty.");
                                             return;
                                         }
                                     }
@@ -148,14 +154,14 @@ public class QueryParser {
                                 nameValueMap.put(columnName[i].trim().toLowerCase(), valueName[i].trim());
                             } else {
                                 display("Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
-                                logQueryExecute(query,"Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
+                                logQueryExecute(query, "Column " + columnName[i].trim().toLowerCase() + " not exist in table.");
                                 return;
                             }
                         }
                         if (!nameValueMap.keySet().isEmpty()) {
                             PrintWriter printWriter;
                             try {
-                                printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt", true)));
+                                printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt", true)));
                                 StringBuilder insertData = new StringBuilder();
                                 for (String colName : nameValueMap.keySet()) {
                                     insertData.append(colName).append(":").append(nameValueMap.get(colName)).append(" || ");
@@ -164,26 +170,26 @@ public class QueryParser {
                                 printWriter.println(insertData);
                                 printWriter.close();
                                 display("1 Row inserted.");
-                                logQueryExecute(query,"1 Row inserted.");
+                                logQueryExecute(query, "1 Row inserted.");
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
                         }
                     } else {
                         display("Number of columns and values are not same.");
-                        logQueryExecute(query,"Number of columns and values are not same.");
+                        logQueryExecute(query, "Number of columns and values are not same.");
                     }
                 } else {
                     display("Table does not exist.");
-                    logQueryExecute(query,"Table does not exist.");
+                    logQueryExecute(query, "Table does not exist.");
                 }
             } else {
                 display("Table name cannot be null.");
-                logQueryExecute(query,"Table name cannot be null.");
+                logQueryExecute(query, "Table name cannot be null.");
             }
         } else {
             display("Invalid query");
-            logQueryExecute(query,"Invalid query");
+            logQueryExecute(query, "Invalid query");
         }
     }
 
@@ -198,5 +204,61 @@ public class QueryParser {
             dbName = useDb.checkDb(dbName);
         }
         return dbName;
+    }
+
+    public static void AlterParser(String query) {
+        String alterRegex = "ALTER TABLE (\\w+) ADD FOREIGN KEY[(](\\w+)[)] REFERENCES (\\w+)[(](\\w+)[)];";
+
+        Pattern syntaxExp = Pattern.compile(alterRegex, Pattern.CASE_INSENSITIVE);
+        Matcher queryParts = syntaxExp.matcher(query);
+        if (queryParts.find()) {
+            String tableName = queryParts.group(1).trim().toLowerCase();
+            if (checkTableExist(tableName)) {
+                String colName = queryParts.group(2).trim().toLowerCase();
+                List<String> columnsNameList = getColumnsNameList(tableName);
+                if (columnsNameList.contains(colName)) {
+                    String refTableName = queryParts.group(3).trim().toLowerCase();
+                    if (checkTableExist(refTableName)) {
+                        String pk = getPrimaryKey(refTableName);
+                        if (pk != null) {
+                            String refColName = queryParts.group(4).trim().toLowerCase();
+                            if (pk.equals(refColName)) {
+                                String tableMetaData = getTableMetaData(tableName);
+                                List<String> fileContent;
+                                try {
+                                    String filePath = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+                                    fileContent = new ArrayList<>(Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8));
+                                    String newTableMetaData = tableMetaData + " || fk:" + colName + ":" + refTableName + ":" + refColName;
+                                    for (int i = 0; i < fileContent.size(); i++) {
+                                        if (fileContent.get(i).trim().equals(tableMetaData)) {
+                                            fileContent.set(i, newTableMetaData);
+                                            break;
+                                        }
+                                    }
+                                    Files.write(Paths.get(filePath), fileContent, StandardCharsets.UTF_8);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                System.out.println(tableMetaData);
+                            } else {
+                                System.out.println("Invalid Reference Field : " + refColName + ". Only Primary Key of Reference Table use as foreign key.");
+                            }
+                        } else {
+                            System.out.println("Foreign key cannot be added as there is no primary key in the table");
+                        }
+                    } else {
+                        System.out.println("Table " + refTableName + " does not exist!!");
+                    }
+                } else {
+                    System.out.println("Column " + colName + " does not exist!!");
+                }
+            } else {
+                System.out.println("Table " + tableName + " does not exist!!");
+            }
+
+        } else {
+            display("Invalid query");
+            logQueryExecute(query, "Invalid query");
+        }
     }
 }
