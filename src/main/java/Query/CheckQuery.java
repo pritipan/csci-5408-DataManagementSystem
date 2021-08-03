@@ -21,24 +21,38 @@ public class CheckQuery {
                 }
                 break;
             case "create":
-                if (useDatabase) {
-                    CreateParser(query);
-                } else {
-                    if (divideQuery[1].equals("database")) {
-                        if (!CreateSchemaParser(query)) {
-                            display("Invalid Query !!");
-                        }
-                    } else {
+                if(divideQuery[1].equals("database")){
+                    if (!CreateSchemaParser(query)) {
+                        display("Invalid Query !!");
+                        logQueryExecute(query,"Invalid Query !!");
+                    }
+                }else{
+                    if(useDatabase){
+                        CreateParser(query);
+                    }else{
                         display("Please select database first!!");
+                        logQueryExecute(query,"Please select database first!!");
                     }
                 }
+//                if (useDatabase) {
+//                    CreateParser(query);
+//                } else {
+//                    if (divideQuery[1].equals("database")) {
+//
+//                    } else {
+//                        display("Please select database first!!");
+//                        logQueryExecute(query,"Please select database first!!");
+//                    }
+//                }
                 break;
             case "use":
                 DATABASE_NAME = UseDatabase(query);
                 if (DATABASE_NAME == null) {
                     display("PLease create database first!! As no such database exist in the system.");
+                    logQueryExecute(query,"PLease create database first!! As no such database exist in the system.");
                 } else {
                     display("You are working on database: " + DATABASE_NAME.toUpperCase());
+                    logQueryExecute(query,"You are working on database: " + DATABASE_NAME.toUpperCase());
                     useDatabase = true;
                 }
                 break;
@@ -47,6 +61,7 @@ public class CheckQuery {
                     InsertParser(query);
                 } else {
                     display("Please select database first!!");
+                    logQueryExecute(query,"Please select database first!!");
                 }
                 break;
             case "update":
@@ -54,6 +69,7 @@ public class CheckQuery {
                     System.out.println("UPDATE : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
+                    logQueryExecute(query,"Please select database first!!");
                 }
                 break;
             case "drop":
@@ -61,6 +77,7 @@ public class CheckQuery {
                     System.out.println("DROP : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
+                    logQueryExecute(query,"Please select database first!!");
                 }
                 break;
             case "delete":
@@ -68,10 +85,12 @@ public class CheckQuery {
                     System.out.println("DELETE : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
+                    logQueryExecute(query,"Please select database first!!");
                 }
                 break;
             default:
                 display("Invalid Query !!");
+                logQueryExecute(query,"Invalid Query !!");
         }
     }
 }
