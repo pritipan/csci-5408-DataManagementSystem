@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Login {
     private final Scanner scanner;
+    public static String USERNAME;
     File file;
 
     public Login() {
@@ -25,22 +26,22 @@ public class Login {
         switch (choose) {
             case "1":
                 System.out.print("Enter your username: ");
-                String username = scanner.nextLine();
+                USERNAME = scanner.nextLine();
                 System.out.print("Enter your password: ");
                 String password = scanner.nextLine();
                 System.out.print("What is favourite car? ");
                 String answer = scanner.nextLine();
-                readLoginInfo(username, password, answer);
+                readLoginInfo(password, answer);
                 break;
             case "2":
                 do {
                     System.out.print("Username: ");
-                    username = scanner.nextLine();
-                    if (checkUser(username)) {
+                    USERNAME = scanner.nextLine();
+                    if (checkUser()) {
                         System.out.println("User already Exist!! PLease Basic.Login...\n");
                         display();
                     }
-                } while (checkUser(username));
+                } while (checkUser());
                 String temp = "";
                 do {
                     System.out.print("Password: ");
@@ -53,7 +54,7 @@ public class Login {
                             System.out.print("What is favourite car? ");
                             answer = scanner.nextLine();
                             System.out.println("Registered Successfully");
-                            writeLoginInfo(username, password, answer);
+                            writeLoginInfo(password, answer);
                         } else {
                             System.out.println("Both password did not matched");
                             System.out.println("Try Again..");
@@ -72,7 +73,7 @@ public class Login {
         }
     }
 
-    void readLoginInfo(String username, String password, String answer) throws IOException {
+    void readLoginInfo(String password, String answer) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line;
         boolean check = false;
@@ -80,7 +81,7 @@ public class Login {
             String[] parts = line.split(" \\|\\| ");
             for (int i = 0; i < parts.length; i++) {
                 try {
-                    if (username.equals(parts[i].trim()) && password.equals(parts[i + 1].trim()) && answer.equals(parts[i + 2].trim())) {
+                    if (USERNAME.equals(parts[i].trim()) && password.equals(parts[i + 1].trim()) && answer.equals(parts[i + 2].trim())) {
                         check = true;
                     }
                 } catch (Exception e) {
@@ -90,28 +91,28 @@ public class Login {
         }
         if (check) {
             System.out.println("Login Successfully");
-            callMenu(username);
+            callMenu();
         } else {
             System.out.println("\n Invalid Credentials or not registered \n");
             display();
         }
     }
 
-    void writeLoginInfo(String username, String password, String answer) throws IOException {
+    void writeLoginInfo(String password, String answer) throws IOException {
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        printWriter.println(username + " || " + password + " || " + answer);
+        printWriter.println(USERNAME + " || " + password + " || " + answer);
         printWriter.close();
-        callMenu(username);
+        callMenu();
     }
 
-    Boolean checkUser(String username) throws IOException {
+    Boolean checkUser() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] parts = line.split(" \\|\\| ");
             for (String part : parts) {
                 try {
-                    if (username.equals(part.trim())) {
+                    if (USERNAME.equals(part.trim())) {
                         return true;
                     }
                 } catch (Exception e) {
@@ -122,7 +123,7 @@ public class Login {
         return false;
     }
 
-    void callMenu(String username) {
-        FeatureMenu.menu(username);
+    void callMenu() {
+        FeatureMenu.menu();
     }
 }

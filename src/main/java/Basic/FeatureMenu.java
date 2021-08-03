@@ -2,6 +2,7 @@ package Basic;
 
 import java.util.Scanner;
 
+import static Basic.Login.USERNAME;
 import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
 
@@ -12,12 +13,13 @@ public class FeatureMenu {
 
     public static void main(String[] arg) {
         System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
-        menu("Test");
+        USERNAME="Foram";
+        menu();
     }
 
-    public static void menu(String username) {
+    public static void menu() {
         do {
-            if (username != null) {
+            if (USERNAME != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
                 System.out.println("1. Query to Execute");
                 System.out.println("2. SQL Dump");
