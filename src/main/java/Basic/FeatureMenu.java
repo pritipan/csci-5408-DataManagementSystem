@@ -1,23 +1,25 @@
 package Basic;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static Basic.Login.USERNAME;
 import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
+import static Basic.Erd.generateERD;
+
 
 public class FeatureMenu {
     private static final Scanner scanner = new Scanner(System.in);
     public static String DATABASE_NAME;
     private static boolean flag = true;
 
-    public static void main(String[] arg) {
+    public static void main(String[] arg) throws IOException {
         System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
         USERNAME="Foram";
         menu();
     }
-
-    public static void menu() {
+    public static void menu() throws IOException {
         do {
             if (USERNAME != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
@@ -44,6 +46,7 @@ public class FeatureMenu {
                         break;
                     case "3":
                         System.out.println(" ERD of DB : " + DATABASE_NAME);
+                        generateERD();
                         break;
                     case "4":
                         System.out.println(" STATE of DB : " + DATABASE_NAME);
