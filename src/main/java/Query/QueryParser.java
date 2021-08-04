@@ -199,4 +199,50 @@ public class QueryParser {
         }
         return dbName;
     }
+    public static boolean selectQueryParser(String query) {
+        String selectRegex = "^select\\s(?:\\*|\\w+)\\sfrom\\s\\w+;?\\s*$";
+        String selectWithWhereRegex = "select\\s.*from\\s.*where\\s.*";
+        String dbName = null;
+        boolean isQueryValid = false;
+        Pattern syntaxExp = Pattern.compile(selectRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        Matcher queryParts = syntaxExp.matcher(query);
+        if (queryParts.find()) {
+            isQueryValid = true;
+            int index = 1;
+            String[] commandTokens = query.split(" ");
+            StringBuilder columns = new StringBuilder();
+            while (!commandTokens[index].equalsIgnoreCase("from")) {
+                columns.append(commandTokens[index++]);
+            }
+            columns = new StringBuilder(columns.toString().replaceAll("\\s+", ""));
+
+            StringBuilder tables = new StringBuilder();
+            index++;
+            while (index < commandTokens.length && !commandTokens[index].equalsIgnoreCase("where")) {
+                tables.append(commandTokens[index++]);
+            }
+            tables = new StringBuilder(tables.toString().replaceAll("\\s+", ""));
+
+            String[] tokens = new String[4];
+            if (index != commandTokens.length) {
+                StringBuilder condition = new StringBuilder();
+                for (int i = index + 1; i < commandTokens.length; i++) {
+                    condition.append(commandTokens[i]);
+                }
+                condition = new StringBuilder(condition.toString().replaceAll("\\s+", ""));
+
+                tokens = new String[6];
+                tokens[4] = "where";
+                tokens[5] = condition.toString();
+            }
+            tokens[0] = commandTokens[0];
+            tokens[1] = columns.toString();
+            tokens[2] = "from";
+            tokens[3] = tables.toString();
+            System.out.println(tokens[1]);
+
+
+        }
+        return isQueryValid;
+    }
 }

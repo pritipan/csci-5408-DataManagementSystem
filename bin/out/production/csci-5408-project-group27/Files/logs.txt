@@ -178,18 +178,3 @@ Action: use database test;
 Message: You are working on database: TEST
 Time: 01:28:41
 
-Executed by: Foram
-Action: select * from test;
-Message: Please select database first!!
-Time: 01:30:53
-
-Executed by: Foram
-Action: use database test
-Message: PLease create database first!! As no such database exist in the system.
-Time: 01:31:01
-
-Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 01:31:07
-

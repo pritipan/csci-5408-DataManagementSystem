@@ -15,10 +15,16 @@ public class CheckQuery {
             case "select":
                 if (useDatabase) {
                     System.out.println(divideQuery[0]);
+                    if (selectQueryParser(query)) {
+                        display("Valid Query !!");
+                    } else {
+                        display("Invalid Query !!");
+                    }
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+
                 break;
             case "create":
                 if(divideQuery[1].equals("database")){
