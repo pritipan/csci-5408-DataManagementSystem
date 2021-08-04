@@ -68,18 +68,3 @@ Action: insert into student4(id, name) values (1, "foram");
 Message: 1 Row inserted.
 Time: 09:51:40
 
-Executed by: Foram
-Action: use database test
-Message: PLease create database first!! As no such database exist in the system.
-Time: 20:22:43
-
-Executed by: Foram
-Action: create database test;
-Message: Database test created successfully.
-Time: 20:22:56
-
-Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 20:23:03
-
