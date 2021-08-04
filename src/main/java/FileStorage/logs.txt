@@ -163,3 +163,48 @@ Action: use database demo;
 Message: You are working on database: DEMO
 Time: 12:51:16
 
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 01:34:43
+
+Executed by: Neelay
+Action: use database test1;
+Message: You are working on database: TEST1
+Time: 01:36:35
+
+Executed by: Neelay
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 01:39:05
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 01:39:27
+
+Executed by: Neelay
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 01:40:49
+
+Executed by: Neelay
+Action: insert into qwe(d int not null, name varchar(5), address varchar(45), primarykey(d));
+Message: Invalid query
+Time: 01:42:06
+
+Executed by: Neelay
+Action: insert into qwe(name) values ("test");
+Message: 1 Row inserted.
+Time: 01:43:48
+
+Executed by: Neelay
+Action: 5
+Message: Invalid Query !!
+Time: 01:44:28
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 02:16:18
+

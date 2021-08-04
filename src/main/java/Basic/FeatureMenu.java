@@ -6,6 +6,8 @@ import java.util.Scanner;
 import static Basic.Login.USERNAME;
 import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
+import static Basic.Erd.generateERD;
+
 
 public class FeatureMenu {
     private static final Scanner scanner = new Scanner(System.in);
@@ -39,6 +41,7 @@ public class FeatureMenu {
                         break;
                     case "3":
                         System.out.println(" ERD of DB : " + DATABASE_NAME);
+                        generateERD();
                         break;
                     case "4":
                         System.out.println(" STATE of DB : " + DATABASE_NAME);

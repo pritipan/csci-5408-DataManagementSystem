@@ -24,7 +24,9 @@ public class QueryParser {
     DATABASE_NAME = "DEMO";
 //    UseDatabase("use database DEMO;");
 //    UpateParser("UPDATE STUDENT SET name = one,id=2 where id = 7;");
-//    AlterParser("alter table student add foreign key(id) references grade(id);");
+    AlterParser("alter table student add foreign key(name) references " +
+        "student3" +
+        "(id);");
 
 
   }
@@ -227,7 +229,6 @@ public class QueryParser {
 
           List<String> rows = getAllRows(fileName);
           for (String line : rows) {
-
             String[] temp = line.split(" \\|\\|");
             Map<String, String> rowData = convertToMap(Arrays.asList(temp),
                 ":");
@@ -270,8 +271,7 @@ public class QueryParser {
             FileWriter fWriter = new FileWriter(fileName);
             fWriter.write(result);
             fWriter.close();
-            System.out.println(
-                "File is created successfully with the content.");
+            System.out.println("File is created successfully with the content.");
           }
           catch (IOException e) {
             System.out.print(e.getMessage());
@@ -320,6 +320,22 @@ public class QueryParser {
     return result;
   }
 
+  public static String DeleteParser(String query) {
+
+    String deleteRegex = "";
+    Pattern syntaxExp = Pattern.compile(deleteRegex, Pattern.CASE_INSENSITIVE);
+    Matcher queryParts = syntaxExp.matcher(query);
+    String result = "";
+    String fileName = "";
+    if (queryParts.find()) {
+      String tableName = queryParts.group("tablename");
+
+      if (tableName != null && checkTableExist(tableName)) {
+        fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+
+      }
+    } return null;
+  }
 
   public static String UseDatabase(String query) {
 

@@ -99,9 +99,13 @@ public class Login {
     }
 
     void writeLoginInfo(String password, String answer) throws IOException {
-        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-        printWriter.println(USERNAME + " || " + password + " || " + answer);
-        printWriter.close();
+        FileWriter fileWriter =
+            new FileWriter(String.valueOf(new BufferedWriter(new FileWriter(file))));
+//        PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+//        printWriter.println(USERNAME + " || " + password + " || " + answer);
+//        printWriter.close();
+        fileWriter.write(USERNAME + "||"+ password + "||" + answer);
+        fileWriter.close();
         callMenu();
     }
 
