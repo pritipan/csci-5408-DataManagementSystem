@@ -15,7 +15,7 @@ public class MetadataHandle {
     }
 
     static boolean checkTableExist(String tableName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+        String fileName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String line;
@@ -32,7 +32,7 @@ public class MetadataHandle {
     }
 
     static List<String> getColumnsNameList(String tableName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+        String fileName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         List<String> columnNameArray = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -53,7 +53,7 @@ public class MetadataHandle {
     }
 
     public static String getPrimaryKey(String tableName) {
-        String fileName = "src/main/java/Files/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+        String fileName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         String primaryKey = null;
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
@@ -77,7 +77,7 @@ public class MetadataHandle {
         List<String> pkValues = new ArrayList<>();
         String primaryKey = getPrimaryKey(tableName);
         if (primaryKey != null) {
-            String fileName = "src/main/java/Files/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+            String fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
             try {
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
                 String line;
@@ -95,5 +95,24 @@ public class MetadataHandle {
             }
         }
         return pkValues;
+    }
+
+    static String getTableMetaData(String tableName) {
+        String fileName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+        String metaData = null;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] parts = line.split(" \\|\\| ");
+                if (tableName.equals(parts[0].trim())) {
+                    metaData = line.trim().toLowerCase();
+                    break;
+                }
+            }
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return metaData;
     }
 }

@@ -4,7 +4,7 @@ import java.io.File;
 
 public class UseDb {
     public String checkDb(String dbName) {
-        File file = new File("src/main/java/Files/Database/METADATA_" + dbName + ".txt");
+        File file = new File("src/main/java/FileStorage/Database/METADATA_" + dbName + ".txt");
         if (file.exists()) {
             return dbName;
         }

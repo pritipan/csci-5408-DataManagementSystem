@@ -40,16 +40,6 @@ public class CheckQuery {
                         logQueryExecute(query,"Please select database first!!");
                     }
                 }
-//                if (useDatabase) {
-//                    CreateParser(query);
-//                } else {
-//                    if (divideQuery[1].equals("database")) {
-//
-//                    } else {
-//                        display("Please select database first!!");
-//                        logQueryExecute(query,"Please select database first!!");
-//                    }
-//                }
                 break;
             case "use":
                 DATABASE_NAME = UseDatabase(query);
@@ -89,6 +79,14 @@ public class CheckQuery {
             case "delete":
                 if (useDatabase) {
                     System.out.println("DELETE : " + divideQuery[0]);
+                } else {
+                    display("Please select database first!!");
+                    logQueryExecute(query,"Please select database first!!");
+                }
+                break;
+            case "alter":
+                if (useDatabase) {
+                    System.out.println("Alter : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");

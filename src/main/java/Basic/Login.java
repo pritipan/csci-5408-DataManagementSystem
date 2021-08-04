@@ -11,7 +11,7 @@ public class Login {
     public Login() {
         scanner = new Scanner(System.in);
         System.out.println("----------- WELCOME -----------");
-        file = new File("src/main/java/Files/Authentication/LoginInfo.txt");
+        file = new File("src/main/java/FileStorage/Authentication/LoginInfo.txt");
     }
 
     void display() throws IOException {
