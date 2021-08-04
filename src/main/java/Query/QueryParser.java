@@ -27,8 +27,6 @@ public class QueryParser {
     AlterParser("alter table student add foreign key(name) references " +
         "student3" +
         "(id);");
-
-
   }
 
   public static void CreateParser(String query) {
@@ -205,86 +203,122 @@ public class QueryParser {
 
    public static boolean UpateParser(String query) throws IOException {
 
-    String updateRegex = "UPDATE\\s+(?<tablename>\\w+)\\s+SET\\s+" +
-        "(?<values>(\\w+\\s*=\\s*\\w+[,\\s]*)+)\\s+where\\s+(?<conditions>" +
-        "(\\w+\\s*=\\s*\\w+[,\\s]*)*);?";
-    Pattern syntaxExp = Pattern.compile(updateRegex, Pattern.CASE_INSENSITIVE);
-    Matcher queryParts = syntaxExp.matcher(query);
+     String updateRegex = "UPDATE\\s+(?<tablename>\\w+)\\s+SET\\s+" + "(?<values>(\\w+\\s*=\\s*\\w+[,\\s]*)+)\\s+where\\s+(?<conditions>" + "(\\w+\\s*=\\s*\\w+[,\\s]*)*);?";
+     Pattern syntaxExp = Pattern.compile(updateRegex, Pattern.CASE_INSENSITIVE);
+     Matcher queryParts = syntaxExp.matcher(query);
      System.out.println(query);
-    String result = "";
-    String fileName="";
-    boolean flag = false;
-    if (queryParts.find()) {
-      String tableName = queryParts.group("tablename");
+     String result = "";
+     String fileName = "";
+     boolean flag = false;
+     if (queryParts.find()) {
+       String tableName = queryParts.group("tablename");
 
-        if (tableName != null && checkTableExist(tableName)) {
-          fileName ="src/main/java/FileStorage/Database/"+DATABASE_NAME.trim().toUpperCase()+ "_" + tableName.trim().toUpperCase() +".txt";
+       if (tableName != null && checkTableExist(tableName)) {
+         fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
 
-          String[] colName = queryParts.group("values").split(",");
-          String[] tempCondition = queryParts.group("conditions").split(",");
-          Map<String, String> columnValuePair = convertToMap(Arrays.asList(colName), "=");
+         String[] colName = queryParts.group("values").split(",");
+         String[] tempCondition = queryParts.group("conditions").split(",");
+         Map<String, String> columnValuePair = convertToMap(Arrays.asList(colName), "=");
 
-          List<String> conditions = Arrays.asList(tempCondition);
-          System.out.println(conditions);
+         List<String> conditions = Arrays.asList(tempCondition);
+         System.out.println(conditions);
 
-          List<String> rows = getAllRows(fileName);
-          for (String line : rows) {
-            String[] temp = line.split(" \\|\\|");
-            Map<String, String> rowData = convertToMap(Arrays.asList(temp),
-                ":");
-            if (conditions.size() == 0)
-              flag = true;
-            else
-              flag = false;
-            for (String condition : conditions) {
-              String conditionKey = condition.split("=")[0].trim();
-              String conditionValue = condition.split("=")[1].trim();
-              if (rowData.containsKey(conditionKey)) {
-                if (rowData.get(conditionKey).equals(conditionValue))
-                  flag = true;
-              } else {
-                System.out.println("Invalid Condition "+conditionKey+"="+conditionValue+" !");
-                return false;
-              }
+         List<String> rows = getAllRows(fileName);
+         for (String line : rows) {
+           String[] temp = line.split(" \\|\\|");
+           Map<String, String> rowData = convertToMap(Arrays.asList(temp), ":");
+           if (conditions.size() == 0)
+             flag = true;
+           else
+             flag = false;
+           for (String condition : conditions) {
+             String conditionKey = condition.split("=")[0].trim();
+             String conditionValue = condition.split("=")[1].trim();
+             if (rowData.containsKey(conditionKey)) {
+               if (rowData.get(conditionKey).equals(conditionValue))
+                 flag = true;
+             } else {
+               System.out.println("Invalid Condition " + conditionKey + "=" + conditionValue + " !");
+               return false;
+             }
+           }
+
+           if (flag) {
+             for (Map.Entry<String, String> updatePair : columnValuePair.entrySet()) {
+               String updateColumnName = updatePair.getKey();
+               String updateColumnValue = updatePair.getValue();
+               if (rowData.containsKey(updateColumnName)) {
+                 rowData.put(updateColumnName, updateColumnValue);
+               } else {
+                 System.out.println("Invalid Column Name " + updateColumnName + " !");
+                 return false;
+               }
+
+             }
+           }
+           result += mapToString(rowData) + "\n";
+         }
+         System.out.println(result);
+         try {
+           FileWriter fWriter = new FileWriter(fileName);
+           fWriter.write(result);
+           fWriter.close();
+           System.out.println("File is created successfully with the content.");
+         } catch (IOException e) {
+           System.out.print(e.getMessage());
+         }
+       }
+     } else {
+       System.out.println("Invalid Query !");
+     }
+     return true;
+   }
+    public static boolean selectQueryParser(String query) {
+        String selectRegex = "^select\\s(?:\\*|\\w+)\\sfrom\\s\\w+;?\\s*$";
+        String selectWithWhereRegex = "select\\s.*from\\s.*where\\s.*";
+        String dbName = null;
+        boolean isQueryValid = false;
+        Pattern syntaxExp = Pattern.compile(selectRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        Matcher queryParts = syntaxExp.matcher(query);
+        if (queryParts.find()) {
+            isQueryValid = true;
+            int index = 1;
+            String[] commandTokens = query.split(" ");
+            StringBuilder columns = new StringBuilder();
+            while (!commandTokens[index].equalsIgnoreCase("from")) {
+                columns.append(commandTokens[index++]);
             }
+            columns = new StringBuilder(columns.toString().replaceAll("\\s+", ""));
 
-            if (flag) {
-              for (Map.Entry<String, String> updatePair : columnValuePair.entrySet()) {
-                String updateColumnName = updatePair.getKey();
-                String updateColumnValue = updatePair.getValue();
-                if(rowData.containsKey(updateColumnName))
-                {
-                  rowData.put(updateColumnName,updateColumnValue);
-                }
-                else
-                {
-                  System.out.println("Invalid Column Name "+updateColumnName+" !");
-                  return false;
-                }
-
-              }
+            StringBuilder tables = new StringBuilder();
+            index++;
+            while (index < commandTokens.length && !commandTokens[index].equalsIgnoreCase("where")) {
+                tables.append(commandTokens[index++]);
             }
-            result += mapToString(rowData)+"\n";
-          }
-          System.out.println(result);
-          try {
-            FileWriter fWriter = new FileWriter(fileName);
-            fWriter.write(result);
-            fWriter.close();
-            System.out.println("File is created successfully with the content.");
-          }
-          catch (IOException e) {
-            System.out.print(e.getMessage());
-          }
+            tables = new StringBuilder(tables.toString().replaceAll("\\s+", ""));
+
+            String[] tokens = new String[4];
+            if (index != commandTokens.length) {
+                StringBuilder condition = new StringBuilder();
+                for (int i = index + 1; i < commandTokens.length; i++) {
+                    condition.append(commandTokens[i]);
+                }
+                condition = new StringBuilder(condition.toString().replaceAll("\\s+", ""));
+
+                tokens = new String[6];
+                tokens[4] = "where";
+                tokens[5] = condition.toString();
+            }
+            tokens[0] = commandTokens[0];
+            tokens[1] = columns.toString();
+            tokens[2] = "from";
+            tokens[3] = tables.toString();
+            System.out.println(tokens[1]);
+
+
         }
-      }
-    else
-    {
-      System.out.println("Invalid Query !");
+        return isQueryValid;
     }
-
-    return true;
-  }
 
   private static Map<String, String> convertToMap(List<String> arr,
                                             String delimeter) {
