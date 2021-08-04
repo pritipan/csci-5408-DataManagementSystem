@@ -250,6 +250,7 @@ public class QueryParser {
 
         }
         return isQueryValid;
+    }
 
     public static void AlterParser(String query) {
         String alterRegex = "ALTER TABLE (\\w+) ADD FOREIGN KEY[(](\\w+)[)] REFERENCES (\\w+)[(](\\w+)[)];";
