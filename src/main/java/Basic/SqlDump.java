@@ -18,6 +18,8 @@ public class SqlDump {
         try {
             printWriter = new PrintWriter(new BufferedWriter(new FileWriter(dumpName)));
             printWriter.println("DATABASE : " + DATABASE_NAME.trim().toUpperCase());
+            printWriter.println();
+            printWriter.println("CREATE DATABASE "+DATABASE_NAME.trim().toUpperCase());
             BufferedReader bufferedReader = new BufferedReader(new FileReader(metadataName));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
