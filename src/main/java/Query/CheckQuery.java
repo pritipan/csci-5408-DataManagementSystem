@@ -1,5 +1,7 @@
 package Query;
 
+import java.io.IOException;
+
 import static Basic.FeatureMenu.DATABASE_NAME;
 import static Basic.LogGenerator.logQueryExecute;
 import static Basic.Message.display;
@@ -8,7 +10,7 @@ import static Query.QueryParser.*;
 public class CheckQuery {
     static boolean useDatabase = false;
 
-    public static void checkType(String query) {
+    public static void checkType(String query) throws IOException {
         String temp = query.toLowerCase();
         String[] divideQuery = temp.split(" ");
         switch (divideQuery[0]) {
@@ -57,6 +59,7 @@ public class CheckQuery {
             case "update":
                 if (useDatabase) {
                     System.out.println("UPDATE : " + divideQuery[0]);
+                    UpateParser(query);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");

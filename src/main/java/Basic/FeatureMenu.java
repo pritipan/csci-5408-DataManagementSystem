@@ -1,5 +1,6 @@
 package Basic;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import static Basic.Login.USERNAME;
@@ -11,13 +12,12 @@ public class FeatureMenu {
     public static String DATABASE_NAME;
     private static boolean flag = true;
 
-    public static void main(String[] arg) {
+    public static void main(String[] arg) throws IOException {
         System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
         USERNAME="Foram";
         menu();
     }
-
-    public static void menu() {
+    public static void menu() throws IOException {
         do {
             if (USERNAME != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
