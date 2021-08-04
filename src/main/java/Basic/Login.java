@@ -123,7 +123,7 @@ public class Login {
         return false;
     }
 
-    void callMenu() {
+    void callMenu() throws IOException {
         FeatureMenu.menu();
     }
 }
