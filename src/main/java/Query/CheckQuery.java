@@ -16,7 +16,6 @@ public class CheckQuery {
                 if (useDatabase) {
                     System.out.println(divideQuery[0]);
                     if (selectQueryParser(query)) {
-                        display("Valid Query !!");
                     } else {
                         display("Invalid Query !!");
                     }
