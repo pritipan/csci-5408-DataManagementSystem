@@ -62,6 +62,7 @@ public class SqlDump {
                 printWriter.println();
             }
             printWriter.close();
+            System.out.println("Dump file successfully created. Please check in "+DATABASE_NAME.trim().toUpperCase() + "_DUMP.txt");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

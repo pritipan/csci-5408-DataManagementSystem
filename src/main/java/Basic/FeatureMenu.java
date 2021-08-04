@@ -35,7 +35,11 @@ public class FeatureMenu {
                         checkType(sqlQuery);
                         break;
                     case "2":
-                        generateDump();
+                        if(DATABASE_NAME==null){
+                            System.out.println("Please select database first!!");
+                        }else{
+                            generateDump();
+                        }
                         break;
                     case "3":
                         System.out.println(" ERD of DB : " + DATABASE_NAME);
