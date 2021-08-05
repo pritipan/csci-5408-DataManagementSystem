@@ -1,1 +1,0 @@
-student || id int not null, name varchar(45), email varchar(45) || id

@@ -59,8 +59,9 @@ public class MetadataHandle {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(tableName);
                 String[] parts = line.split(" \\|\\| ");
-                if (tableName.equals(parts[0].trim())) {
+                if (tableName.equals(parts[0].trim().toLowerCase())) {
                     if (parts.length > 2) {
                         primaryKey = parts[2].trim().toLowerCase();
                         break;

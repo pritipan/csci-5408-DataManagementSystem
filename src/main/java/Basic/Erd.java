@@ -22,7 +22,7 @@ public  class Erd {
   public static void generateERD() {
 //    DATABASE_NAME = "DEMO";
     database.loadDatabase();
-    System.out.println(getAllRelations());
+//    System.out.println(getAllRelations());
     String out = "";
 
     Map<String, String> relations =  getAllRelations();
@@ -103,7 +103,7 @@ public  class Erd {
         String fkColumn = columnMeta.getFkColumn();
         if (fkTable != null) {
           ColumnMeta fkColumnMeta = databaseMeta.get(fkTable).getTableMeta().get(fkColumn);
-          System.out.println(columnMeta.getPrimaryKey());
+//          System.out.println(columnMeta.getPrimaryKey());
           if (columnMeta.getPrimaryKey() && fkColumnMeta.getPrimaryKey())
             connector = ONETOONE;
           else

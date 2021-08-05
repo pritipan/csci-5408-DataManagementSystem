@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="csci-5408-project-group27" />
         <module name="group_27" />
+        <module name="csci-5408-project-group27" />
       </profile>
     </annotationProcessing>
   </component>

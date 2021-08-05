@@ -22,7 +22,7 @@ public class DatabaseMeta {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    System.out.println(result);
+//    System.out.println(result);
     for(String table : result)
     {
       String[] tableMeta = table.split(" \\|\\|");
@@ -31,7 +31,7 @@ public class DatabaseMeta {
       tableMetaData.setTableMeta(tableMeta);
       databaseMeta.put(tableName,tableMetaData);
     }
-    System.out.println(databaseMeta);
+//    System.out.println(databaseMeta);
   }
 
   public Map<String,TableMeta> getDatabaseMeta()
