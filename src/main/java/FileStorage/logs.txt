@@ -69,19 +69,144 @@ Message: 1 Row inserted.
 Time: 09:51:40
 
 Executed by: Foram
-Action: use database test
-Message: PLease create database first!! As no such database exist in the system.
-Time: 20:22:43
+Action: create database testone;
+Message: Database testone created successfully.
+Time: 08:45:12
 
 Executed by: Foram
-Action: create database test;
-Message: Database test created successfully.
-Time: 20:22:56
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 08:45:24
 
 Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 20:23:03
+Action: create table qwe (d int NOT NULL, name varchar(5), PRIMARYKEY(D));
+Message: Invalid query
+Time: 08:46:54
+
+Executed by: Foram
+Action: create table qwe(id int not null, name varchar(30), primarykey(id));
+Message: Invalid query
+Time: 08:47:33
+
+Executed by: Foram
+Action: create table qwe(id int NOT NULL, name varchar(45), PRIMARYKEY(id));
+Message: Invalid query
+Time: 08:48:56
+
+Executed by: Foram
+Action: create table qwe(name varchar(45));
+Message: Table successfully created.
+Time: 08:50:01
+
+Executed by: Foram
+Action: insert into qwe(name) values (one");
+Message: Invalid query
+Time: 08:52:48
+
+Executed by: Foram
+Action: use database DEMO;
+Message: You are working on database: DEMO
+Time: 10:57:02
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 11:59:35
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:19:21
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:21:14
+
+Executed by: Foram
+Action: use database DEMO;
+Message: You are working on database: DEMO
+Time: 12:28:52
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:32:26
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:41:12
+
+Executed by: Foram
+Action: insert into student(id, name) values (4, "four");
+Message: 1 Row inserted.
+Time: 12:43:04
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:48:43
+
+Executed by: Foram
+Action: insert into student(id, name) values (6, "six");
+Message: 1 Row inserted.
+Time: 12:49:12
+
+Executed by: Foram
+Action: UPDATE STUDENT SET name = test;
+Message: Please select database first!!
+Time: 12:51:06
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:51:16
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 01:34:43
+
+Executed by: Neelay
+Action: use database test1;
+Message: You are working on database: TEST1
+Time: 01:36:35
+
+Executed by: Neelay
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 01:39:05
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 01:39:27
+
+Executed by: Neelay
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 01:40:49
+
+Executed by: Neelay
+Action: insert into qwe(d int not null, name varchar(5), address varchar(45), primarykey(d));
+Message: Invalid query
+Time: 01:42:06
+
+Executed by: Neelay
+Action: insert into qwe(name) values ("test");
+Message: 1 Row inserted.
+Time: 01:43:48
+
+Executed by: Neelay
+Action: 5
+Message: Invalid Query !!
+Time: 01:44:28
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 02:16:18
 
 Executed by: Foram
 Action: use database test;
