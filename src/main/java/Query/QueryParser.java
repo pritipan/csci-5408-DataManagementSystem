@@ -286,9 +286,122 @@ public class QueryParser {
 
     public static boolean selectQueryParser(String query) {
         String selectRegex = "^select\\s(?:\\*|\\w+)\\sfrom\\s\\w+;?\\s*$";
-
         boolean isQueryValid = false;
-        Pattern syntaxExp = Pattern.compile(selectRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+        if (!query.contains("where")) {
+            Pattern syntaxExp = Pattern.compile(selectRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+            Matcher queryParts = syntaxExp.matcher(query);
+            if (queryParts.find()) {
+                isQueryValid = true;
+                int index = 1;
+                String[] commandTokens = query.split(" ");
+                StringBuilder columns = new StringBuilder();
+                while (!commandTokens[index].equalsIgnoreCase("from")) {
+                    columns.append(commandTokens[index++]);
+                }
+                columns = new StringBuilder(columns.toString().replaceAll("\\s+", ""));
+
+                StringBuilder tableName = new StringBuilder();
+                index++;
+                while (index < commandTokens.length && !commandTokens[index].equalsIgnoreCase("where")) {
+                    tableName.append(commandTokens[index++]);
+                }
+                tableName = new StringBuilder(tableName.toString().replaceAll("\\s+", ""));
+
+                String[] queryToken = new String[4];
+                if (index != commandTokens.length) {
+                    StringBuilder condition = new StringBuilder();
+                    for (int i = index + 1; i < commandTokens.length; i++) {
+                        condition.append(commandTokens[i]);
+                    }
+                    condition = new StringBuilder(condition.toString().replaceAll("\\s+", ""));
+
+                    queryToken = new String[6];
+                    queryToken[4] = "where";
+                    queryToken[5] = condition.toString();
+                }
+                queryToken[0] = commandTokens[0];
+                queryToken[1] = columns.toString();
+                queryToken[2] = "from";
+                queryToken[3] = tableName.toString().replace(";", "");
+                String filename = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_"
+                        + queryToken[3].toUpperCase() + ".txt";
+                File file = new File(filename);
+                if (!file.exists()) {
+                    System.out.println("Table does not exist");
+                } else {
+                    ArrayList<HashMap> dataList = new ArrayList<HashMap>();
+
+                    try (FileInputStream fileStream = new FileInputStream(filename)) {
+                        Scanner sc = new Scanner(fileStream);
+
+                        while (sc.hasNextLine()) {
+                            HashMap<String, String> dataMap = new HashMap<String, String>();
+                            String line = sc.nextLine();
+                            if (!line.equals("")) {
+                                String[] col = line.replace("\"", "").split(" \\|\\|");
+
+                                for (int i = 0; i < col.length; i++) {
+                                    String[] colName = col[i].split(":");
+
+                                    dataMap.put(colName[0], colName[1].replace("\"", ""));
+
+                                    for (int j = 1; j < colName.length; j++) {
+
+                                    }
+                                }
+                                dataList.add(dataMap);
+                            }
+
+                        }
+                        if (queryToken[1].contains("*")) {
+                            for (Object key : dataList.get(0).keySet()) {
+                                System.out.print(key.toString() + "|");
+                            }
+
+                            for (int i = 0; i < dataList.size(); i++) {
+                                HashMap dataMap = dataList.get(i);
+                                System.out.println();
+                                dataMap.forEach((k, v) -> {
+                                    System.out.print(v + " ");
+                                });
+
+                            }
+                        } else {
+                            String[] finalTokens = queryToken;
+                            System.out.println(finalTokens[1].trim());
+                            for (int i = 0; i < dataList.size(); i++) {
+
+                                HashMap dataMap = dataList.get(i);
+
+                                System.out.println();
+
+                                dataMap.forEach((k, v) -> {
+                                    if (k.toString().trim().equalsIgnoreCase(finalTokens[1].trim())) {
+                                        System.out.print(v);
+                                    }
+                                });
+
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        } else {
+            isQueryValid = selectWithWhereQueryParser(query);
+        }
+        System.out.println();
+        return isQueryValid;
+    }
+
+    public static boolean selectWithWhereQueryParser(String query) {
+        String selectWithWhereRegex = "select\\s.*from\\s.*where\\s.*";
+        String dbName = null;
+        boolean isQueryValid = true;
+        Pattern syntaxExp = Pattern.compile(selectWithWhereRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
         if (queryParts.find()) {
             isQueryValid = true;
@@ -300,14 +413,14 @@ public class QueryParser {
             }
             columns = new StringBuilder(columns.toString().replaceAll("\\s+", ""));
 
-            StringBuilder tables = new StringBuilder();
+            StringBuilder tableName = new StringBuilder();
             index++;
             while (index < commandTokens.length && !commandTokens[index].equalsIgnoreCase("where")) {
-                tables.append(commandTokens[index++]);
+                tableName.append(commandTokens[index++]);
             }
-            tables = new StringBuilder(tables.toString().replaceAll("\\s+", ""));
+            tableName = new StringBuilder(tableName.toString().replaceAll("\\s+", ""));
 
-            String[] tokens = new String[4];
+            String[] queryToken = new String[4];
             if (index != commandTokens.length) {
                 StringBuilder condition = new StringBuilder();
                 for (int i = index + 1; i < commandTokens.length; i++) {
@@ -315,15 +428,90 @@ public class QueryParser {
                 }
                 condition = new StringBuilder(condition.toString().replaceAll("\\s+", ""));
 
-                tokens = new String[6];
-                tokens[4] = "where";
-                tokens[5] = condition.toString();
+                queryToken = new String[6];
+                queryToken[4] = "where";
+                queryToken[5] = condition.toString();
             }
-            tokens[0] = commandTokens[0];
-            tokens[1] = columns.toString();
-            tokens[2] = "from";
-            tokens[3] = tables.toString();
+            queryToken[0] = commandTokens[0];
+            queryToken[1] = columns.toString();
+            queryToken[2] = "from";
+            queryToken[3] = tableName.toString().replace(";", "");
+            String filename = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_"
+                    + queryToken[3].toUpperCase() + ".txt";
+            File file = new File(filename);
+            if (!file.exists()) {
+                System.out.println("Table does not exists");
+            } else {
+                ArrayList<HashMap> dataList = new ArrayList<HashMap>();
+
+                try (FileInputStream fileStream = new FileInputStream(filename)) {
+                    Scanner sc = new Scanner(fileStream);
+
+                    while (sc.hasNextLine()) {
+                        HashMap<String, String> dataMap = new HashMap<String, String>();
+                        String line = sc.nextLine();
+                        if (!line.equals("")) {
+                            String[] col = line.replace("\"", "").split(" \\|\\|");
+
+                            for (int i = 0; i < col.length; i++) {
+                                String[] colName = col[i].split(":");
+
+                                dataMap.put(colName[0].trim(), colName[1].trim().replace("\"", ""));
+
+                                for (int j = 1; j < colName.length; j++) {
+
+                                }
+                            }
+                            dataList.add(dataMap);
+                        }
+
+                    }
+
+                    String[] whereCondition = queryToken[5].replace(";", "").split("=");
+                    if (queryToken[1].contains("*")) {
+                        for (Object key : dataList.get(0).keySet()) {
+                            System.out.print(key.toString() + "|");
+                        }
+                        System.out.println();
+                        for (Object key : dataList.get(0).keySet()) {
+
+                            for (int i = 0; i < dataList.size(); i++) {
+                                HashMap dataMap = dataList.get(i);
+                                dataMap.forEach((k, v) -> {
+                                    if (k.toString().trim().equalsIgnoreCase(whereCondition[0])
+                                            && v.toString().trim().equalsIgnoreCase(whereCondition[1])) {
+                                        String value = dataMap.get(key).toString();
+                                        System.out.print(value+ " ");
+                                    }
+                                });
+
+                            }
+                        }
+                    } else {
+
+                        for (int i = 0; i < dataList.size(); i++) {
+                            int mapIndex = i;
+                            HashMap dataMap = dataList.get(i);
+                            String[] finalTokens = queryToken;
+                            dataMap.forEach((k, v) -> {
+                                if (k.toString().trim().equalsIgnoreCase(whereCondition[0])
+                                        && v.toString().trim().equalsIgnoreCase(whereCondition[1])) {
+                                    String value = dataList.get(mapIndex).get(finalTokens[1].trim()).toString();
+                                    System.out.println(finalTokens[1].trim());
+                                    System.out.print(value );
+                                }
+                            });
+
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
+
         return isQueryValid;
     }
 
