@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -17,6 +19,29 @@ import static Basic.Message.display;
 import static Query.MetadataHandle.*;
 
 public class QueryParser {
+
+	public static void acquireLocks(Lock lock, String opName) throws InterruptedException {
+		TimeUnit unit = TimeUnit.valueOf("SECONDS");
+		try {
+
+			lock.tryLock(100000, unit); 	// Thread tries to get the lock
+
+		} finally {
+			logQueryExecute(opName,Thread.currentThread().getName() + " thread " + " acquires the lock ");
+			System.out.println(opName + " in the " + Thread.currentThread().getName() + " thread " + " acquires the lock ");
+		}
+	}
+
+	public static void releaseLock(Lock lock,  String opName) {
+		try {
+			lock.unlock();		// Thread releases the lock
+			logQueryExecute(opName,Thread.currentThread().getName() + " releases the lock ");
+			System.out.println(Thread.currentThread().getName() + " thread " + " releases the lock ");
+		} finally {
+
+		}
+
+	}
 
 	public static void main(String[] arg) throws IOException {
 		// CreateParser("create table student3(id int NOT NULL, name varchar(45),

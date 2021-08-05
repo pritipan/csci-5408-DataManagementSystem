@@ -14,7 +14,7 @@ public class Login {
         file = new File("src/main/java/FileStorage/Authentication/LoginInfo.txt");
     }
 
-    void display() throws IOException {
+    void display() throws IOException, InterruptedException {
         System.out.println("----------- CHOOSE -----------");
         System.out.println("1. Login\n2. Register\n3. Exit");
         System.out.print("Enter your Choice: ");
@@ -22,7 +22,7 @@ public class Login {
         operation(choose);
     }
 
-    void operation(String choose) throws IOException {
+    void operation(String choose) throws IOException, InterruptedException {
         switch (choose) {
             case "1":
                 System.out.print("Enter your username: ");
@@ -73,7 +73,7 @@ public class Login {
         }
     }
 
-    void readLoginInfo(String password, String answer) throws IOException {
+    void readLoginInfo(String password, String answer) throws IOException, InterruptedException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line;
         boolean check = false;
@@ -98,7 +98,7 @@ public class Login {
         }
     }
 
-    void writeLoginInfo(String password, String answer) throws IOException {
+    void writeLoginInfo(String password, String answer) throws IOException, InterruptedException {
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(file,true)));
         printWriter.println(USERNAME + " || " + password + " || " + answer);
         printWriter.close();
@@ -123,7 +123,7 @@ public class Login {
         return false;
     }
 
-    void callMenu() throws IOException {
+    void callMenu() throws IOException, InterruptedException {
         FeatureMenu.menu();
     }
 }
