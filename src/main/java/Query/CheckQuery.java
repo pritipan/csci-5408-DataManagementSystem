@@ -5,6 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static Basic.FeatureMenu.DATABASE_NAME;
+import static Basic.LogGenerator.logEventExecute;
 import static Basic.LogGenerator.logQueryExecute;
 import static Basic.Message.display;
 import static Query.QueryParser.*;
@@ -26,7 +27,7 @@ public class CheckQuery {
                     }
                 } else {
                     display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
+                    logEventExecute(query,"Please select database first!!");
                 }
                 releaseLock(lock, "select");
                 break;
@@ -41,7 +42,7 @@ public class CheckQuery {
                         CreateParser(query);
                     }else{
                         display("Please select database first!!");
-                        logQueryExecute(query,"Please select database first!!");
+                        logEventExecute(query,"Please select database first!!");
                     }
                 }
                 break;
@@ -49,10 +50,10 @@ public class CheckQuery {
                 DATABASE_NAME = UseDatabase(query);
                 if (DATABASE_NAME == null) {
                     display("PLease create database first!! As no such database exist in the system.");
-                    logQueryExecute(query,"PLease create database first!! As no such database exist in the system.");
+                    logEventExecute(query,"PLease create database first!! As no such database exist in the system.");
                 } else {
                     display("You are working on database: " + DATABASE_NAME.toUpperCase());
-                    logQueryExecute(query,"You are working on database: " + DATABASE_NAME.toUpperCase());
+                    logEventExecute(query,"You are working on database: " + DATABASE_NAME.toUpperCase());
                     useDatabase = true;
                 }
                 break;
@@ -62,7 +63,7 @@ public class CheckQuery {
                     InsertParser(query);
                 } else {
                     display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
+                    logEventExecute(query,"Please select database first!!");
                 }
                 releaseLock(lock, "insert");
                 break;
@@ -72,7 +73,7 @@ public class CheckQuery {
                     UpdateParser(query);
                 } else {
                     display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
+                    logEventExecute(query,"Please select database first!!");
                 }
                 releaseLock(lock, "update");
                 break;
@@ -82,7 +83,7 @@ public class CheckQuery {
                     DeleteParser(query);
                 } else {
                     display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
+                    logEventExecute(query,"Please select database first!!");
                 }
                 releaseLock(lock, "delete");
                 break;
@@ -92,7 +93,7 @@ public class CheckQuery {
                     AlterParser(query);
                 } else {
                     display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
+                    logEventExecute(query,"Please select database first!!");
                 }
                 releaseLock(lock, "alter");
                 break;

@@ -1,0 +1,16 @@
+Table Name: GRADE
+Attributes: ID INT NOT NULL, TYPE VARCHAR(45)
+Number of rows: 0
+
+Table Name: STUDENT2
+Attributes: ID INT NOT NULL, NAME VARCHAR(45)
+Number of rows: 1
+
+Table Name: STUDENT3
+Attributes: ID INT NOT NULL, NAME VARCHAR(45), NAME123 VARCHAR(45), GRADEID INT
+Number of rows: 0
+
+Table Name: STUDENT
+Attributes: ID INT NOT NULL, NAME VARCHAR(40), GRADEID INT
+Number of rows: 3
+

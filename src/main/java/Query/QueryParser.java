@@ -19,6 +19,16 @@ import static Query.MetadataHandle.*;
 
 public class QueryParser {
 
+    public static void main(String[] arg) throws IOException {
+//        CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));");
+//        DATABASE_NAME = "DEMO";
+//        InsertParser("insert into student(id, name, gradeId) values (3, \"foram\", \"4\");");
+//        UseDatabase("use database DEMO;");
+//        UpdateParser("UPDATE qwe SET name = \"three\" WHERE name=\"one\";");
+//        AlterParser("alter table student2 add foreign key(name) references "+"student3" + "(id);");
+//        DeleteParser("DELETE FROM qwe WHERE name=\"three\" ; ");
+    }
+
     public static void acquireLocks(Lock lock, String opName) throws InterruptedException {
         TimeUnit unit = TimeUnit.valueOf("SECONDS");
         try {
@@ -40,20 +50,6 @@ public class QueryParser {
 
         }
 
-    }
-
-    public static void main(String[] arg) throws IOException {
-        // CreateParser("create table student3(id int NOT NULL, name varchar(45),
-        // name123 varchar(45), PRIMARY KEY(id));", "demo");
-        // InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
-        DATABASE_NAME = "DEMO";
-//    UseDatabase("use database DEMO;");
-//    UpateParser("UPDATE qwe SET name = \"three\" WHERE name=\"one\";");
-        AlterParser("alter table student2 add foreign key(name) references "
-//        "student3" +
-//        "(id);");
-//      DeleteParser("DELETE FROM qwe WHERE name=\"three\" ; "
-        );
     }
 
     public static void CreateParser(String query) {

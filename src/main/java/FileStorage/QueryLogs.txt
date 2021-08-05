@@ -1,0 +1,5 @@
+Executed by: Foram
+Action: create table student(id int);
+Message: Table successfully created.
+Time: 13:45:50
+
