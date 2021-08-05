@@ -1,0 +1,31 @@
+
+******************** Table : education ********************
+
+Cardinality :- 
+education--N-----------1--student
+
+ForeignKey :- 
+id---------------->student(id)
+
+
+Columns :- 
+id int
+type varchar(45)
+
+--------------------------------------------------
+
+******************** Table : student ********************
+
+Cardinality :- 
+student--1-----------N--education
+
+
+ForeignKey :- 
+Nothing
+
+Columns :- 
+name varchar(45)
+id int (PK)
+email varchar(45)
+
+--------------------------------------------------
