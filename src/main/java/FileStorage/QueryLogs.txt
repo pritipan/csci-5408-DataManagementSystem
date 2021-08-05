@@ -3,3 +3,103 @@ Action: create table student(id int);
 Message: Table successfully created.
 Time: 13:45:50
 
+Executed by: Foram
+Action: insert
+Message: main thread  acquires the lock 
+Time: 14:54:05
+
+Executed by: Foram
+Action: insert into student(id, name) values (5, "abc");
+Message: 1 Row inserted.
+Time: 14:54:05
+
+Executed by: Foram
+Action: insert
+Message: main releases the lock 
+Time: 14:54:05
+
+Executed by: Foram
+Action: insert
+Message: main thread  acquires the lock 
+Time: 15:04:10
+
+Executed by: Foram
+Action: insert into student(id, name) values (5, "abc");
+Message: 1 Row inserted.
+Time: 15:04:10
+
+Executed by: Foram
+Action: insert
+Message: main releases the lock 
+Time: 15:04:10
+
+Executed by: Foram
+Action: update
+Message: main thread  acquires the lock 
+Time: 15:05:10
+
+Executed by: Foram
+Action: update student set name="two" where id=1;
+Message: Update done successfully.
+Time: 15:05:10
+
+Executed by: Foram
+Action: update
+Message: main releases the lock 
+Time: 15:05:10
+
+Executed by: Foram
+Action: insert
+Message: main thread  acquires the lock 
+Time: 15:05:55
+
+Executed by: Foram
+Action: insert into student(id, name) values (6, "demo");
+Message: 1 Row inserted.
+Time: 15:05:55
+
+Executed by: Foram
+Action: insert
+Message: main releases the lock 
+Time: 15:05:55
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 15:06:19
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 15:06:19
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 15:06:39
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 15:06:39
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 15:07:30
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 15:07:30
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 15:10:56
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 15:10:56
+

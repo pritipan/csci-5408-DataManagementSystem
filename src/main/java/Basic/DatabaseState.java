@@ -5,6 +5,7 @@ import java.io.*;
 import static Basic.FeatureMenu.DATABASE_NAME;
 
 public class DatabaseState {
+
     public static void generateDbState(){
         File file = new File("src/main/java/FileStorage/GeneralLogs.txt");
         PrintWriter printWriter;

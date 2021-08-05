@@ -5,6 +5,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static Basic.FeatureMenu.DATABASE_NAME;
+import static Basic.LockTable.acquireLocks;
+import static Basic.LockTable.releaseLock;
 import static Basic.LogGenerator.logEventExecute;
 import static Basic.LogGenerator.logQueryExecute;
 import static Basic.Message.display;

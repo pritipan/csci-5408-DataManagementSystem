@@ -10,10 +10,6 @@ import static Basic.FeatureMenu.DATABASE_NAME;
 
 
 public class MetadataHandle {
-    public static void main(String[] arg) {
-        //getColumnsNameList("student", "demo");
-    }
-
     static boolean checkTableExist(String tableName) {
         String fileName = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
         try {

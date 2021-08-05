@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static Basic.FeatureMenu.CONCURRENT_FLAG;
 import static Basic.FeatureMenu.DATABASE_NAME;
 import static Basic.LogGenerator.logQueryExecute;
 import static Basic.Message.display;
@@ -19,41 +20,7 @@ import static Query.MetadataHandle.*;
 
 public class QueryParser {
 
-    public static void main(String[] arg) throws IOException {
-//        CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));");
-//        DATABASE_NAME = "DEMO";
-//        InsertParser("insert into student(id, name, gradeId) values (3, \"foram\", \"4\");");
-//        UseDatabase("use database DEMO;");
-//        UpdateParser("UPDATE qwe SET name = \"three\" WHERE name=\"one\";");
-//        AlterParser("alter table student2 add foreign key(name) references "+"student3" + "(id);");
-//        DeleteParser("DELETE FROM qwe WHERE name=\"three\" ; ");
-    }
-
-    public static void acquireLocks(Lock lock, String opName) throws InterruptedException {
-        TimeUnit unit = TimeUnit.valueOf("SECONDS");
-        try {
-
-            lock.tryLock(100000, unit);    // Thread tries to get the lock
-
-        } finally {
-            logQueryExecute(opName, Thread.currentThread().getName() + " thread " + " acquires the lock ");
-            System.out.println(opName + " in the " + Thread.currentThread().getName() + " thread " + " acquires the lock ");
-        }
-    }
-
-    public static void releaseLock(Lock lock, String opName) {
-        try {
-            lock.unlock();        // Thread releases the lock
-            logQueryExecute(opName, Thread.currentThread().getName() + " releases the lock ");
-            System.out.println(Thread.currentThread().getName() + " thread " + " releases the lock ");
-        } finally {
-
-        }
-
-    }
-
     public static void CreateParser(String query) {
-
         String createRegex = "CREATE TABLE\\s*(?<tableName>\\w+)\\((?<columns>(" +
                 "(\\w+\\s" +
                 "(varchar\\(\\d+\\)|int)\\s*(?:NOT NULL)?,?\\s*)+))(PRIMARY " +
@@ -131,7 +98,6 @@ public class QueryParser {
     }
 
     public static boolean CreateSchemaParser(String query) {
-
         String createRegex = "CREATE DATABASE\\s(\\w+);";
         Pattern syntaxExp = Pattern.compile(createRegex, Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
@@ -147,7 +113,6 @@ public class QueryParser {
     }
 
     static void InsertParser(String query) {
-
         String insertRegex = "INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
         Pattern syntaxExp = Pattern.compile(insertRegex, Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
@@ -198,10 +163,17 @@ public class QueryParser {
                         if (!nameValueMap.keySet().isEmpty()) {
                             PrintWriter printWriter;
                             try {
-                                printWriter = new PrintWriter(new BufferedWriter(new FileWriter(
-                                        "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_"
-                                                + tableName.trim().toUpperCase() + ".txt",
-                                        true)));
+                                if(CONCURRENT_FLAG){
+                                    printWriter = new PrintWriter(new BufferedWriter(new FileWriter(
+                                            "src/main/java/FileStorage/Database/TEMP_" + DATABASE_NAME.trim().toUpperCase() + "_"
+                                                    + tableName.trim().toUpperCase() + ".txt",
+                                            true)));
+                                }else{
+                                    printWriter = new PrintWriter(new BufferedWriter(new FileWriter(
+                                            "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_"
+                                                    + tableName.trim().toUpperCase() + ".txt",
+                                            true)));
+                                }
                                 StringBuilder insertData = new StringBuilder();
                                 for (String colName : nameValueMap.keySet()) {
                                     insertData.append(colName).append(":").append(nameValueMap.get(colName))
@@ -235,7 +207,6 @@ public class QueryParser {
     }
 
     public static boolean UpdateParser(String query) throws IOException {
-
         String updateRegex = "UPDATE\\s+(?<tablename>\\w+)\\s+SET\\s+" +
                 "(?<values>(\\w+\\s*=\\s*[\"\']?\\w+[\"\']?[,\\s]*)+)\\s+where\\s+" +
                 "(?<conditions>" + "(\\w+\\s*=\\s*[\"\']?\\w+[\"\']?[,\\s]*)*);?";
@@ -248,7 +219,11 @@ public class QueryParser {
             String tableName = queryParts.group("tablename");
 
             if (tableName != null && checkTableExist(tableName)) {
-                fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                if(CONCURRENT_FLAG){
+                    fileName = "src/main/java/FileStorage/Database/TEMP_" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                }else{
+                    fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                }
 
                 String[] colName = queryParts.group("values").split(",");
                 String[] tempCondition = queryParts.group("conditions").split(",");
@@ -311,8 +286,7 @@ public class QueryParser {
 
     public static boolean selectQueryParser(String query) {
         String selectRegex = "^select\\s(?:\\*|\\w+)\\sfrom\\s\\w+;?\\s*$";
-        String selectWithWhereRegex = "select\\s.*from\\s.*where\\s.*";
-        String dbName = null;
+
         boolean isQueryValid = false;
         Pattern syntaxExp = Pattern.compile(selectRegex, Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
         Matcher queryParts = syntaxExp.matcher(query);
@@ -349,35 +323,27 @@ public class QueryParser {
             tokens[1] = columns.toString();
             tokens[2] = "from";
             tokens[3] = tables.toString();
-
-
         }
         return isQueryValid;
     }
 
     private static Map<String, String> convertToMap(List<String> arr, String delimeter) {
-
         Map<String, String> result = new HashMap<>();
-
         for (String s : arr) {
             result.put(s.split(delimeter)[0].trim(), s.split(delimeter)[1].trim());
         }
-
         return result;
     }
 
     private static String mapToString(Map<String, String> map) {
         List<String> list = new ArrayList<>();
-
         for (Map.Entry<String, String> temp : map.entrySet()) {
             list.add(temp.getKey() + ":" + temp.getValue());
-
         }
         return String.join(" || ", list);
     }
 
     private static List<String> getAllRows(String fileName) throws IOException {
-
         List<String> result;
         try (Stream<String> lines = Files.lines(Paths.get(fileName))) {
             result = lines.collect(Collectors.toList());
@@ -386,7 +352,6 @@ public class QueryParser {
     }
 
     public static boolean DeleteParser(String query) throws IOException {
-
         String deleteRegex = "DELETE\\s+FROM\\s+(?<tablename>\\w+)\\s*(WHERE\\s" +
                 "(?<conditions>(\\w+\\s*(=|>=|<=|!=)\\s*[\"\']?\\w+[\"\']?[,\\s]*)*))" +
                 "?;";
@@ -416,7 +381,13 @@ public class QueryParser {
                             result += line + "\n";
                         }
                     }
-                    File myObj = new File("src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+                    File myObj;
+                    if(CONCURRENT_FLAG){
+                        myObj = new File("src/main/java/FileStorage/Database/TEMP_" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+                    }else{
+                        myObj = new File("src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+                    }
+
                     if (myObj.delete()) {
                         display("Table " + tableName + " Deleted Successfully !");
                         logQueryExecute(query, "Table " + tableName + " Deleted Successfully !");
@@ -425,7 +396,11 @@ public class QueryParser {
                         logQueryExecute(query, "Failed to delete table " + tableName);
                     }
                 } else {
-                    fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                    if(CONCURRENT_FLAG){
+                        fileName = "src/main/java/FileStorage/Database/TEMP_" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                    }else{
+                        fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+                    }
                     List<String> rows = getAllRows(fileName);
                     for (String line : rows) {
                         String[] temp = line.split(" \\|\\|");
