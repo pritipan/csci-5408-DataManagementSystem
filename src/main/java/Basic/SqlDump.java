@@ -19,15 +19,15 @@ public class SqlDump {
             printWriter = new PrintWriter(new BufferedWriter(new FileWriter(dumpName)));
             printWriter.println("DATABASE : " + DATABASE_NAME.trim().toUpperCase());
             printWriter.println();
-            printWriter.println("CREATE DATABASE "+DATABASE_NAME.trim().toUpperCase());
+            printWriter.println("CREATE DATABASE "+DATABASE_NAME.trim().toUpperCase()+";");
             BufferedReader bufferedReader = new BufferedReader(new FileReader(metadataName));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(" \\|\\| ");
                 if (getPrimaryKey(parts[0].trim()) == null) {
-                    printWriter.println("CREATE TABLE " + parts[0].trim() + " (" + parts[1].trim() + ");");
+                    printWriter.println("CREATE TABLE " + parts[0].trim().toUpperCase() + " (" + parts[1].trim().toUpperCase() + ");");
                 } else {
-                    printWriter.println("CREATE TABLE " + parts[0].trim() + " (" + parts[1].trim() + ", PRIMARY KEY(" + parts[2].trim() + "));");
+                    printWriter.println("CREATE TABLE " + parts[0].trim().toUpperCase() + " (" + parts[1].trim().toUpperCase() + ", PRIMARY KEY(" + parts[2].trim().toUpperCase() + "));");
                 }
                 tableNames.add(parts[0].trim());
             }
@@ -52,8 +52,8 @@ public class SqlDump {
                                 columns.append(col.trim().split(":")[0].trim()).append(", ");
                                 values.append(col.trim().split(":")[1].trim()).append(", ");
                             }
-                            columns = new StringBuilder(columns.substring(0, columns.length() - 2));
-                            values = new StringBuilder(values.substring(0, values.length() - 2));
+                            columns = new StringBuilder(columns.substring(0, columns.length() - 2).toUpperCase());
+                            values = new StringBuilder(values.substring(0, values.length() - 2).toUpperCase());
                             insertQuery += " (" + columns + ") VALUES (" + values + ");";
                             printWriter.println(insertQuery);
                         }
