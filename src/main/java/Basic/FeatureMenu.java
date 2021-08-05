@@ -14,12 +14,12 @@ public class FeatureMenu {
     public static String DATABASE_NAME;
     private static boolean flag = true;
 
-    public static void main(String[] arg) throws IOException {
+    public static void main(String[] arg) throws IOException, InterruptedException {
         System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
         USERNAME="Foram";
         menu();
     }
-    public static void menu() throws IOException {
+    public static void menu() throws IOException, InterruptedException {
         do {
             if (USERNAME != null) {
                 System.out.println("----------- Choose from one of the operations -----------");

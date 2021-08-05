@@ -1,6 +1,8 @@
 package Query;
 
 import java.io.IOException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static Basic.FeatureMenu.DATABASE_NAME;
 import static Basic.LogGenerator.logQueryExecute;
@@ -9,12 +11,14 @@ import static Query.QueryParser.*;
 
 public class CheckQuery {
     static boolean useDatabase = false;
+    static Lock lock = new ReentrantLock();
 
-    public static void checkType(String query) throws IOException {
+    public static void checkType(String query) throws IOException, InterruptedException {
         String temp = query.toLowerCase();
         String[] divideQuery = temp.split(" ");
         switch (divideQuery[0]) {
             case "select":
+                acquireLocks(lock, "select");
                 if (useDatabase) {
                     if (selectQueryParser(query)) {
                     } else {
@@ -24,9 +28,10 @@ public class CheckQuery {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
-
+                releaseLock(lock, "select");
                 break;
             case "create":
+                acquireLocks(lock, "create");
                 if(divideQuery[1].equals("database")){
                     if (!CreateSchemaParser(query)) {
                         display("Invalid Query !!");
@@ -40,6 +45,7 @@ public class CheckQuery {
                         logQueryExecute(query,"Please select database first!!");
                     }
                 }
+                releaseLock(lock, "create");
                 break;
             case "use":
                 DATABASE_NAME = UseDatabase(query);
@@ -53,14 +59,17 @@ public class CheckQuery {
                 }
                 break;
             case "insert":
+                acquireLocks(lock, "insert");
                 if (useDatabase) {
                     InsertParser(query);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+                releaseLock(lock, "insert");
                 break;
             case "update":
+                acquireLocks(lock, "update");
                 if (useDatabase) {
                     System.out.println("UPDATE : " + divideQuery[0]);
                     UpateParser(query);
@@ -68,30 +77,37 @@ public class CheckQuery {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+                releaseLock(lock, "update");
                 break;
             case "drop":
+                acquireLocks(lock, "drop");
                 if (useDatabase) {
                     System.out.println("DROP : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+                releaseLock(lock, "drop");
                 break;
             case "delete":
+                acquireLocks(lock, "delete");
                 if (useDatabase) {
                     System.out.println("DELETE : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+                releaseLock(lock, "delete");
                 break;
             case "alter":
+                acquireLocks(lock, "alter");
                 if (useDatabase) {
                     System.out.println("Alter : " + divideQuery[0]);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
                 }
+                releaseLock(lock, "alter");
                 break;
             default:
                 display("Invalid Query !!");

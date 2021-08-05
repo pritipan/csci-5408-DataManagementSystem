@@ -813,3 +813,43 @@ Action: use database demo;
 Message: You are working on database: DEMO
 Time: 14:09:43
 
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 14:14:12
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 14:23:44
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 14:28:47
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 14:50:41
+
+Executed by: Foram
+Action: select
+Message: main thread  acquires the lock 
+Time: 14:50:46
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 14:53:39
+
+Executed by: Foram
+Action: select
+Message: main thread  acquires the lock 
+Time: 14:53:46
+
+Executed by: Foram
+Action: select
+Message: main releases the lock 
+Time: 14:53:46
+
