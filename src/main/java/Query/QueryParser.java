@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,10 +20,34 @@ import static Query.MetadataHandle.*;
 
 public class QueryParser {
 
-  public static void main(String[] arg) throws IOException {
-    //CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));", "demo");
-    //InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
-    DATABASE_NAME = "TESTONE";
+	public static void acquireLocks(Lock lock, String opName) throws InterruptedException {
+		TimeUnit unit = TimeUnit.valueOf("SECONDS");
+		try {
+
+			lock.tryLock(100000, unit); 	// Thread tries to get the lock
+
+		} finally {
+			logQueryExecute(opName,Thread.currentThread().getName() + " thread " + " acquires the lock ");
+			System.out.println(opName + " in the " + Thread.currentThread().getName() + " thread " + " acquires the lock ");
+		}
+	}
+
+	public static void releaseLock(Lock lock,  String opName) {
+		try {
+			lock.unlock();		// Thread releases the lock
+			logQueryExecute(opName,Thread.currentThread().getName() + " releases the lock ");
+			System.out.println(Thread.currentThread().getName() + " thread " + " releases the lock ");
+		} finally {
+
+		}
+
+	}
+
+	public static void main(String[] arg) throws IOException {
+		// CreateParser("create table student3(id int NOT NULL, name varchar(45),
+		// name123 varchar(45), PRIMARY KEY(id));", "demo");
+		// InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
+		DATABASE_NAME = "DEMO";
 //    UseDatabase("use database DEMO;");
 //    UpateParser("UPDATE qwe SET name = \"three\" WHERE name=\"one\";");
     AlterParser("alter table student2 add foreign key(name) references "
@@ -125,19 +151,18 @@ public class QueryParser {
     return false;
   }
 
-  static void InsertParser(String query) {
+	static void InsertParser(String query) {
 
-    String insertRegex = "(?!)INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? " +
-        "VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
-    Pattern syntaxExp = Pattern.compile(insertRegex, Pattern.CASE_INSENSITIVE);
-    Matcher queryParts = syntaxExp.matcher(query);
-    if (queryParts.find()) {
-      String tableName = queryParts.group(1);
-      if (tableName != null) {
-        if (checkTableExist(tableName)) {
-          String columns = queryParts.group(2);
-          columns = columns.substring(1, queryParts.group(2).length() - 1);
-          String[] columnName = columns.split(",");
+		String insertRegex = "INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
+		Pattern syntaxExp = Pattern.compile(insertRegex, Pattern.CASE_INSENSITIVE);
+		Matcher queryParts = syntaxExp.matcher(query);
+		if (queryParts.find()) {
+			String tableName = queryParts.group(1);
+			if (tableName != null) {
+				if (checkTableExist(tableName)) {
+					String columns = queryParts.group(2);
+					columns = columns.substring(1, queryParts.group(2).length() - 1);
+					String[] columnName = columns.split(",");
 
           String values = queryParts.group(3);
           values = values.substring(1, queryParts.group(3).length() - 1);
@@ -499,53 +524,56 @@ public class QueryParser {
 
     String alterRegex = "ALTER TABLE (\\w+) ADD FOREIGN KEY[(](\\w+)[)] REFERENCES (\\w+)[(](\\w+)[)];";
 
-    Pattern syntaxExp = Pattern.compile(alterRegex, Pattern.CASE_INSENSITIVE);
-    Matcher queryParts = syntaxExp.matcher(query);
-    if (queryParts.find()) {
-      String tableName = queryParts.group(1).trim().toLowerCase();
-      if (checkTableExist(tableName)) {
-        String colName = queryParts.group(2).trim().toLowerCase();
-        List<String> columnsNameList = getColumnsNameList(tableName);
-        if (columnsNameList.contains(colName)) {
-          String refTableName = queryParts.group(3).trim().toLowerCase();
-          if (checkTableExist(refTableName)) {
-            String pk = getPrimaryKey(refTableName);
-            System.out.println(pk);
-            if (pk != null) {
-              String refColName = queryParts.group(4).trim().toLowerCase();
-              if (pk.equals(refColName)) {
-                String tableMetaData = getTableMetaData(tableName);
-                List<String> fileContent;
-                try {
-                  String filePath = "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
-                  fileContent = new ArrayList<>(Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8));
-                  String newTableMetaData = tableMetaData + " || fk:" + colName + ":" + refTableName + ":" + refColName;
-                  for (int i = 0; i < fileContent.size(); i++) {
-                    if (fileContent.get(i).trim().equals(tableMetaData)) {
-                      fileContent.set(i, newTableMetaData);
-                      break;
-                    }
-                  }
-                  Files.write(Paths.get(filePath), fileContent, StandardCharsets.UTF_8);
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
-                System.out.println(tableMetaData);
-              } else {
-                System.out.println("Invalid Reference Field : " + refColName + ". Only Primary Key of Reference Table use as foreign key.");
-              }
-            } else {
-              System.out.println("Foreign key cannot be added as there is no primary key in the table");
-            }
-          } else {
-            System.out.println("Table " + refTableName + " does not exist!!");
-          }
-        } else {
-          System.out.println("Column " + colName + " does not exist!!");
-        }
-      } else {
-        System.out.println("Table " + tableName + " does not exist!!");
-      }
+		Pattern syntaxExp = Pattern.compile(alterRegex, Pattern.CASE_INSENSITIVE);
+		Matcher queryParts = syntaxExp.matcher(query);
+		if (queryParts.find()) {
+			String tableName = queryParts.group(1).trim().toLowerCase();
+			if (checkTableExist(tableName)) {
+				String colName = queryParts.group(2).trim().toLowerCase();
+				List<String> columnsNameList = getColumnsNameList(tableName);
+				if (columnsNameList.contains(colName)) {
+					String refTableName = queryParts.group(3).trim().toLowerCase();
+					if (checkTableExist(refTableName)) {
+						String pk = getPrimaryKey(refTableName);
+						if (pk != null) {
+							String refColName = queryParts.group(4).trim().toLowerCase();
+							if (pk.equals(refColName)) {
+								String tableMetaData = getTableMetaData(tableName);
+								List<String> fileContent;
+								try {
+									String filePath = "src/main/java/FileStorage/Database/METADATA_"
+											+ DATABASE_NAME.trim().toUpperCase() + ".txt";
+									fileContent = new ArrayList<>(
+											Files.readAllLines(Paths.get(filePath), StandardCharsets.UTF_8));
+									String newTableMetaData = tableMetaData + " || fk:" + colName + ":" + refTableName
+											+ ":" + refColName;
+									for (int i = 0; i < fileContent.size(); i++) {
+										if (fileContent.get(i).trim().equals(tableMetaData)) {
+											fileContent.set(i, newTableMetaData);
+											break;
+										}
+									}
+									Files.write(Paths.get(filePath), fileContent, StandardCharsets.UTF_8);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								System.out.println(tableMetaData);
+							} else {
+								System.out.println("Invalid Reference Field : " + refColName
+										+ ". Only Primary Key of Reference Table use as foreign key.");
+							}
+						} else {
+							System.out.println("Foreign key cannot be added as there is no primary key in the table");
+						}
+					} else {
+						System.out.println("Table " + refTableName + " does not exist!!");
+					}
+				} else {
+					System.out.println("Column " + colName + " does not exist!!");
+				}
+			} else {
+				System.out.println("Table " + tableName + " does not exist!!");
+			}
 
     } else {
       display("Invalid query");

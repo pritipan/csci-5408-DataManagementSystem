@@ -3,6 +3,7 @@ package Basic;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static Basic.DatabaseState.generateDbState;
 import static Basic.Login.USERNAME;
 import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
@@ -14,12 +15,12 @@ public class FeatureMenu {
     public static String DATABASE_NAME;
     private static boolean flag = true;
 
-    public static void main(String[] arg) throws IOException {
+    public static void main(String[] arg) throws IOException, InterruptedException {
         System.out.println("\n----------- WELCOME TO DATABASE MANAGEMENT SYSTEM -----------\n");
         USERNAME="Foram";
         menu();
     }
-    public static void menu() throws IOException {
+    public static void menu() throws IOException, InterruptedException {
         do {
             if (USERNAME != null) {
                 System.out.println("----------- Choose from one of the operations -----------");
@@ -49,7 +50,11 @@ public class FeatureMenu {
                         generateERD();
                         break;
                     case "4":
-                        System.out.println(" STATE of DB : " + DATABASE_NAME);
+                        if(DATABASE_NAME==null){
+                            System.out.println("Please select database first!!");
+                        }else{
+                            generateDbState();
+                        }
                         break;
                     case "5":
                         System.out.println(" Concurrent transaction " + DATABASE_NAME);
