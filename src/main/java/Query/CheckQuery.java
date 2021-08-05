@@ -72,7 +72,7 @@ public class CheckQuery {
                 acquireLocks(lock, "update");
                 if (useDatabase) {
                     System.out.println("UPDATE : " + divideQuery[0]);
-                    UpateParser(query);
+                    UpdateParser(query);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
@@ -93,6 +93,7 @@ public class CheckQuery {
                 acquireLocks(lock, "delete");
                 if (useDatabase) {
                     System.out.println("DELETE : " + divideQuery[0]);
+                    DeleteParser(query);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");
@@ -103,6 +104,7 @@ public class CheckQuery {
                 acquireLocks(lock, "alter");
                 if (useDatabase) {
                     System.out.println("Alter : " + divideQuery[0]);
+                    AlterParser(query);
                 } else {
                     display("Please select database first!!");
                     logQueryExecute(query,"Please select database first!!");

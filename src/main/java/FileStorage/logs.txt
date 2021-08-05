@@ -208,288 +208,203 @@ Action: use database demo;
 Message: You are working on database: DEMO
 Time: 02:16:18
 
-Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 20:29:11
-
-Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 20:30:44
-
-Executed by: Foram
-Action: use database test
-Message: PLease create database first!! As no such database exist in the system.
-Time: 20:22:43
-
-Executed by: Foram
-Action: create database test;
-Message: Database test created successfully.
-Time: 20:22:56
-
-Executed by: Foram
-Action: use database test;
-Message: You are working on database: TEST
-Time: 20:23:03
-
-Executed by: Foram
+Executed by: Neelay
 Action: use database demo;
 Message: You are working on database: DEMO
-Time: 13:50:09
+Time: 04:08:17
 
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:53:28
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:54:44
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:58:08
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:59:40
-
-Executed by: Foram
-Action: cla
-Message: Invalid Query !!
-Time: 14:01:33
-
-Executed by: Foram
-Action: select * from student where id=10;
-Message: Please select database first!!
-Time: 14:01:49
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:02:15
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:03:43
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:05:03
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:08:30
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:09:43
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:14:12
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:23:44
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:28:47
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:50:41
-
-Executed by: Foram
-Action: select
-Message: main thread  acquires the lock
-Time: 14:50:46
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 14:53:39
-
-Executed by: Foram
-Action: select
-Message: main thread  acquires the lock
-Time: 14:53:46
-
-Executed by: Foram
-Action: select
-Message: main releases the lock
-Time: 14:53:46
-
-Executed by: testuser
-Action: create
-Message: main thread  acquires the lock 
-Time: 06:53:54
-
-Executed by: testuser
-Action: create database finaldemo;
-Message: Database finaldemo created successfully.
-Time: 06:53:55
-
-Executed by: testuser
-Action: create
-Message: main releases the lock 
-Time: 06:53:55
-
-Executed by: testuser
-Action: use database finaldemo;
-Message: You are working on database: FINALDEMO
-Time: 06:55:04
-
-Executed by: testuser
-Action: create
-Message: main thread  acquires the lock 
-Time: 07:00:21
-
-Executed by: testuser
-Action: create table student(id int NOT NULL, name varchar(45), name varchar(45), PRIMARY KEY(id));
-Message: Column name should not be same.
-Time: 07:00:21
-
-Executed by: testuser
-Action: create
-Message: main releases the lock 
-Time: 07:00:21
-
-Executed by: testuser
-Action: create
-Message: main thread  acquires the lock 
-Time: 07:00:51
-
-Executed by: testuser
-Action: create table student(id int NOT NULL, name varchar(45), email varchar(45), PRIMARY KEY(id));
-Message: Table successfully created.
-Time: 07:00:51
-
-Executed by: testuser
-Action: create
-Message: main releases the lock 
-Time: 07:00:51
-
-Executed by: testuser
-Action: insert
-Message: main thread  acquires the lock 
-Time: 07:01:41
-
-Executed by: testuser
-Action: insert into student(id, name, email) values (1, "foram", "foram@gmail.com");
+Executed by: Neelay
+Action: insert into student(d,name) values (esteight,8);
 Message: Invalid query
-Time: 07:01:41
+Time: 04:14:17
 
-Executed by: testuser
-Action: insert
-Message: main releases the lock 
-Time: 07:01:41
+Executed by: Neelay
+Action: insert into student(id,name) values (
+Message: Invalid query
+Time: 04:14:48
 
-Executed by: testuser
-Action: insert
-Message: main thread  acquires the lock 
-Time: 07:02:05
+Executed by: Neelay
+Action: insert into student(id,name) values (8,"testeight");
+Message: Invalid query
+Time: 04:15:14
 
-Executed by: testuser
-Action: insert into student(id, name) values (1, "foram");
+Executed by: Neelay
+Action: insert into student(name,id) values ("testeight",8);
+Message: Invalid query
+Time: 04:16:36
+
+Executed by: Neelay
+Action: insert into qwe(name) values ("two");
+Message: Table does not exist.
+Time: 04:17:59
+
+Executed by: Neelay
+Action: use database testone;
+Message: You are working on database: TESTONE
+Time: 04:18:58
+
+Executed by: Neelay
+Action: insert into qwe(name) values ("two");
 Message: 1 Row inserted.
-Time: 07:02:06
+Time: 04:19:18
 
-Executed by: testuser
-Action: insert
-Message: main releases the lock 
-Time: 07:02:06
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 04:24:03
 
-Executed by: testuser
-Action: insert
-Message: main thread  acquires the lock 
-Time: 07:03:20
+Executed by: Neelay
+Action: use databse testone;
+Message: PLease create database first!! As no such database exist in the system.
+Time: 04:34:32
 
-Executed by: testuser
-Action: insert into student(id, name, email) values (1, "foram", "foram@gmail");
+Executed by: Neelay
+Action: use databse testone;
+Message: PLease create database first!! As no such database exist in the system.
+Time: 04:35:18
+
+Executed by: Neelay
+Action: use database TESTONE;
+Message: You are working on database: TESTONE
+Time: 04:35:54
+
+Executed by: Neelay
+Action: use database DEMO;
+Message: You are working on database: DEMO
+Time: 11:39:06
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 11:51:56
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 11:54:52
+
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:02:43
+
+Executed by: Neelay
+Action: create table studetn(d int NOT NULL, name varchar(45), PRIMARYKEY(id));
 Message: Invalid query
-Time: 07:03:20
+Time: 12:05:48
 
-Executed by: testuser
-Action: insert
-Message: main releases the lock 
-Time: 07:03:20
-
-Executed by: testuser
-Action: insert
-Message: main thread  acquires the lock 
-Time: 07:03:46
-
-Executed by: testuser
-Action: insert into student(id, name, email) values (1, "foram", foram);
+Executed by: Neelay
+Action: CREATE TABLE STUDENT(id int NOTNULL, name varchar(45), PRIMARYKEY(id));
 Message: Invalid query
-Time: 07:03:46
+Time: 12:07:48
 
-Executed by: testuser
-Action: insert
-Message: main releases the lock 
-Time: 07:03:46
+Executed by: Neelay
+Action: create table student(id int not null, name varchar(45), primarykey(id));
+Message: Invalid query
+Time: 12:09:25
 
-Executed by: testuser
-Action: select
-Message: main thread  acquires the lock 
-Time: 07:05:40
+Executed by: Neelay
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:20:15
 
-Executed by: testuser
-Action: select
-Message: main releases the lock 
-Time: 07:05:40
+Executed by: Neelay
+Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
+Message: Primary key must be from one of the columns.
+Time: 12:21:49
 
-Executed by: testuser
-Action: select
-Message: main thread  acquires the lock 
-Time: 07:06:11
+Executed by: Foram
+Action: use database demo
+Message: PLease create database first!! As no such database exist in the system.
+Time: 12:26:30
 
-Executed by: testuser
-Action: select
-Message: main releases the lock 
-Time: 07:06:11
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:26:50
 
-Executed by: testuser
-Action: select
-Message: main thread  acquires the lock 
-Time: 07:06:51
+Executed by: Foram
+Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
+Message: Table successfully created.
+Time: 12:27:03
 
-Executed by: testuser
-Action: select
-Message: main releases the lock 
-Time: 07:06:51
+Executed by: Foram
+Action: use database demo
+Message: PLease create database first!! As no such database exist in the system.
+Time: 12:31:41
 
-Executed by: testuser
-Action: select
-Message: main thread  acquires the lock 
-Time: 07:07:13
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:31:51
 
-Executed by: testuser
-Action: select
-Message: main releases the lock 
-Time: 07:07:13
+Executed by: Foram
+Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
+Message: Table successfully created.
+Time: 12:32:01
 
-Executed by: testuser
-Action: select
-Message: main thread  acquires the lock 
-Time: 07:07:34
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 12:37:45
 
-Executed by: testuser
-Action: select
-Message: main releases the lock 
-Time: 07:07:34
+Executed by: Foram
+Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
+Message: Table successfully created.
+Time: 12:37:49
+
+Executed by: Foram
+Action: insert into student(id,name) values (1,"est");
+Message: Invalid query
+Time: 12:55:57
+
+Executed by: Foram
+Action: insert into STUDENT(id,name) values (1,"test");
+Message: Invalid query
+Time: 12:57:25
+
+Executed by: Foram
+Action: INSERT INTO STUDENT(
+Message: Invalid query
+Time: 12:57:56
+
+Executed by: Foram
+Action: INSERT INTO STUDENT(id,name) values (1,"est");
+Message: Invalid query
+Time: 13:04:59
+
+Executed by: Foram
+Action: insert into STUDENT(id, name) values (1, "test");
+Message: 1 Row inserted.
+Time: 13:10:43
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:20:39
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:21:59
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:22:46
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:26:20
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:31:28
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 13:33:57
 

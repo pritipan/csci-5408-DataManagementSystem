@@ -1,0 +1,195 @@
+Executed by: Foram
+Action: select * from student;
+Message: Please select database first!!
+Time: 09:02:01
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 09:02:11
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 09:02:42
+
+Executed by: Foram
+Action: create database test;
+Message: Database test created successfully.
+Time: 09:04:30
+
+Executed by: Foram
+Action: use database demo;
+Message: You are working on database: DEMO
+Time: 09:09:11
+
+Executed by: Foram
+Action: create database test1;
+Message: Database test1 created successfully.
+Time: 09:09:21
+
+Executed by: Foram
+Action: create table priti (
+Message: Please select database first!!
+Time: 20:08:41
+
+Executed by: Foram
+Action: Create table priti (name String, data String)
+Message: Please select database first!!
+Time: 20:10:24
+
+Executed by: Foram
+Action: create database1
+Message: Please select database first!!
+Time: 20:17:59
+
+Executed by: Foram
+Action: create database1;
+Message: Please select database first!!
+Time: 20:18:57
+
+Executed by: Foram
+Action: use database priti
+Message: PLease create database first!! As no such database exist in the system.
+Time: 20:24:03
+
+Executed by: Foram
+Action: Create database Priti;
+Message: Database Priti created successfully.
+Time: 20:27:14
+
+Executed by: Foram
+Action: use database Priti;
+Message: You are working on database: PRITI
+Time: 20:30:20
+
+Executed by: Foram
+Action: create table tableTest( name varchar, address varchar);
+Message: Invalid query
+Time: 20:31:31
+
+Executed by: Foram
+Action: create table tableTest(name varchar, address varchar);
+Message: Invalid query
+Time: 20:31:59
+
+Executed by: Foram
+Action: CREATE TABLE Persons (
+Message: Invalid query
+Time: 20:32:12
+
+Executed by: Foram
+Action: CREATE TABLE Persons (
+Message: Invalid query
+Time: 20:32:31
+
+Executed by: Foram
+Action: CREATE TABLE Persons ( PersonID int, LastName varchar);
+Message: Invalid query
+Time: 20:33:26
+
+Executed by: Foram
+Action: create table PritiTable(name varchar, address varchar);
+Message: Invalid query
+Time: 20:36:10
+
+Executed by: Foram
+Action: create table PritiTable(name varchar, address varchar primarykey(name));
+Message: Invalid query
+Time: 20:37:00
+
+Executed by: Foram
+Action: create table PritiTable(name varchar, address varchar, primarykey(name));
+Message: Invalid query
+Time: 20:37:43
+
+Executed by: Foram
+Action: create table DEMO_PritiTable(name varchar, address varchar primarykey(name));
+Message: Invalid query
+Time: 20:38:29
+
+Executed by: Foram
+Action: create table demo_priti(name varchar, address varchar);
+Message: Invalid query
+Time: 20:39:49
+
+Executed by: Foram
+Action: create table DEMO_PritiTable(name varchar not null, address varchar(50), primarykey(name));
+Message: Invalid query
+Time: 20:41:19
+
+Executed by: Foram
+Action: select * from Priti;
+Message: Please select database first!!
+Time: 23:03:36
+
+Executed by: Foram
+Action: select kewjfnvjefnvef
+Message: Please select database first!!
+Time: 23:03:55
+
+Executed by: Foram
+Action: select name, id from test;
+Message: Please select database first!!
+Time: 23:44:53
+
+Executed by: Foram
+Action: use priti
+Message: PLease create database first!! As no such database exist in the system.
+Time: 23:45:06
+
+Executed by: Foram
+Action: use database priti
+Message: PLease create database first!! As no such database exist in the system.
+Time: 23:46:25
+
+Executed by: Foram
+Action: use database metadata_priti;
+Message: PLease create database first!! As no such database exist in the system.
+Time: 23:47:47
+
+Executed by: Foram
+Action: create database test;
+Message: Database test created successfully.
+Time: 23:48:38
+
+Executed by: Foram
+Action: use database test;
+Message: You are working on database: TEST
+Time: 23:48:55
+
+Executed by: Foram
+Action: use database test;
+Message: You are working on database: TEST
+Time: 23:55:20
+
+Executed by: Foram
+Action: select * from test;
+Message: Please select database first!!
+Time: 23:56:35
+
+Executed by: Foram
+Action: use database test;
+Message: You are working on database: TEST
+Time: 23:56:51
+
+Executed by: Foram
+Action: use database test;
+Message: You are working on database: TEST
+Time: 01:28:41
+
+Executed by: Foram
+Action: select * from test;
+Message: Please select database first!!
+Time: 01:30:53
+
+Executed by: Foram
+Action: use database test
+Message: PLease create database first!! As no such database exist in the system.
+Time: 01:31:01
+
+Executed by: Foram
+Action: use database test;
+Message: You are working on database: TEST
+Time: 01:31:07
+
