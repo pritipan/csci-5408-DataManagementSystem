@@ -1,410 +1,245 @@
-Executed by: Foram
-Action: select * from student;
-Message: Please select database first!!
-Time: 09:02:01
+Executed by: user
+Action: create database final;
+Message: Database final created successfully.
+Time: 08:20:15
 
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 09:02:11
+Executed by: user
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:20:27
 
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 09:02:42
+Executed by: user
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:21:49
 
-Executed by: Foram
-Action: create database test;
-Message: Database test created successfully.
-Time: 09:04:30
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 09:09:11
-
-Executed by: Foram
-Action: create database test1;
-Message: Database test1 created successfully.
-Time: 09:09:21
-
-Executed by: null
-Action: alter table (student) add foreign key(id) reference grade(id);
-Message: Invalid query
-Time: 09:36:19
-
-Executed by: null
-Action: alter table (student) add foreign key(id) references grade(id);
-Message: Invalid query
-Time: 09:36:38
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 09:50:18
-
-Executed by: Foram
-Action: create table student(id int NOT NULL, name varchar(45), name varchar(45), PRIMARY KEY(id));
-Message: Table already exist
-Time: 09:50:42
-
-Executed by: Foram
-Action: create table student4(id int NOT NULL, name varchar(45), name varchar(45), PRIMARY KEY(id));
-Message: Column name should not be same.
-Time: 09:50:50
-
-Executed by: Foram
+Executed by: user
 Action: create table student(id int NOT NULL, name varchar(45), PRIMARY KEY(id));
-Message: Table already exist
-Time: 09:51:04
-
-Executed by: Foram
-Action: create table student4(id int NOT NULL, name varchar(45), PRIMARY KEY(id));
 Message: Table successfully created.
-Time: 09:51:20
+Time: 08:23:38
 
-Executed by: Foram
-Action: insert into student4(id, name) values (1, "foram");
+Executed by: user
+Action: insert
+Message: main thread  acquires the lock 
+Time: 08:23:52
+
+Executed by: user
+Action: insert into student(id, name) values (1, "foram");
 Message: 1 Row inserted.
-Time: 09:51:40
+Time: 08:23:52
 
-Executed by: Foram
-Action: create database testone;
-Message: Database testone created successfully.
-Time: 08:45:12
+Executed by: user
+Action: insert
+Message: main releases the lock 
+Time: 08:23:52
 
-Executed by: Foram
-Action: use database testone;
-Message: You are working on database: TESTONE
-Time: 08:45:24
-
-Executed by: Foram
-Action: create table qwe (d int NOT NULL, name varchar(5), PRIMARYKEY(D));
-Message: Invalid query
-Time: 08:46:54
-
-Executed by: Foram
-Action: create table qwe(id int not null, name varchar(30), primarykey(id));
-Message: Invalid query
-Time: 08:47:33
-
-Executed by: Foram
-Action: create table qwe(id int NOT NULL, name varchar(45), PRIMARYKEY(id));
-Message: Invalid query
-Time: 08:48:56
-
-Executed by: Foram
-Action: create table qwe(name varchar(45));
+Executed by: user
+Action: create table education(id int, name varchar(45));
 Message: Table successfully created.
-Time: 08:50:01
+Time: 08:28:29
 
-Executed by: Foram
-Action: insert into qwe(name) values (one");
-Message: Invalid query
-Time: 08:52:48
+Executed by: user
+Action: insert
+Message: main thread  acquires the lock 
+Time: 08:29:24
 
-Executed by: Foram
-Action: use database DEMO;
-Message: You are working on database: DEMO
-Time: 10:57:02
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 11:59:35
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:19:21
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:21:14
-
-Executed by: Foram
-Action: use database DEMO;
-Message: You are working on database: DEMO
-Time: 12:28:52
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:32:26
-
-Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:41:12
-
-Executed by: Foram
-Action: insert into student(id, name) values (4, "four");
+Executed by: user
+Action: insert into education(id, name) values (1, "BE");
 Message: 1 Row inserted.
-Time: 12:43:04
+Time: 08:29:24
+
+Executed by: user
+Action: insert
+Message: main releases the lock 
+Time: 08:29:24
+
+Executed by: user
+Action: alter
+Message: main thread  acquires the lock 
+Time: 08:30:48
+
+Executed by: user
+Action: alter
+Message: main releases the lock 
+Time: 08:30:48
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:48:43
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:31:44
 
 Executed by: Foram
-Action: insert into student(id, name) values (6, "six");
-Message: 1 Row inserted.
-Time: 12:49:12
+Action: insert
+Message: main thread  acquires the lock 
+Time: 08:31:56
 
 Executed by: Foram
-Action: UPDATE STUDENT SET name = test;
-Message: Please select database first!!
-Time: 12:51:06
+Action: insert into student(id, name) values (1, "foram");
+Message: Duplicate value not allowed in primary key column.
+Time: 08:31:57
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:51:16
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 01:34:43
-
-Executed by: Neelay
-Action: use database test1;
-Message: You are working on database: TEST1
-Time: 01:36:35
-
-Executed by: Neelay
-Action: use database testone;
-Message: You are working on database: TESTONE
-Time: 01:39:05
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 01:39:27
-
-Executed by: Neelay
-Action: use database testone;
-Message: You are working on database: TESTONE
-Time: 01:40:49
-
-Executed by: Neelay
-Action: insert into qwe(d int not null, name varchar(5), address varchar(45), primarykey(d));
-Message: Invalid query
-Time: 01:42:06
-
-Executed by: Neelay
-Action: insert into qwe(name) values ("test");
-Message: 1 Row inserted.
-Time: 01:43:48
-
-Executed by: Neelay
-Action: 5
-Message: Invalid Query !!
-Time: 01:44:28
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 02:16:18
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 04:08:17
-
-Executed by: Neelay
-Action: insert into student(d,name) values (esteight,8);
-Message: Invalid query
-Time: 04:14:17
-
-Executed by: Neelay
-Action: insert into student(id,name) values (
-Message: Invalid query
-Time: 04:14:48
-
-Executed by: Neelay
-Action: insert into student(id,name) values (8,"testeight");
-Message: Invalid query
-Time: 04:15:14
-
-Executed by: Neelay
-Action: insert into student(name,id) values ("testeight",8);
-Message: Invalid query
-Time: 04:16:36
-
-Executed by: Neelay
-Action: insert into qwe(name) values ("two");
-Message: Table does not exist.
-Time: 04:17:59
-
-Executed by: Neelay
-Action: use database testone;
-Message: You are working on database: TESTONE
-Time: 04:18:58
-
-Executed by: Neelay
-Action: insert into qwe(name) values ("two");
-Message: 1 Row inserted.
-Time: 04:19:18
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 04:24:03
-
-Executed by: Neelay
-Action: use databse testone;
-Message: PLease create database first!! As no such database exist in the system.
-Time: 04:34:32
-
-Executed by: Neelay
-Action: use databse testone;
-Message: PLease create database first!! As no such database exist in the system.
-Time: 04:35:18
-
-Executed by: Neelay
-Action: use database TESTONE;
-Message: You are working on database: TESTONE
-Time: 04:35:54
-
-Executed by: Neelay
-Action: use database DEMO;
-Message: You are working on database: DEMO
-Time: 11:39:06
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 11:51:56
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 11:54:52
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:02:43
-
-Executed by: Neelay
-Action: create table studetn(d int NOT NULL, name varchar(45), PRIMARYKEY(id));
-Message: Invalid query
-Time: 12:05:48
-
-Executed by: Neelay
-Action: CREATE TABLE STUDENT(id int NOTNULL, name varchar(45), PRIMARYKEY(id));
-Message: Invalid query
-Time: 12:07:48
-
-Executed by: Neelay
-Action: create table student(id int not null, name varchar(45), primarykey(id));
-Message: Invalid query
-Time: 12:09:25
-
-Executed by: Neelay
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:20:15
-
-Executed by: Neelay
-Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
-Message: Primary key must be from one of the columns.
-Time: 12:21:49
+Action: insert
+Message: main releases the lock 
+Time: 08:31:57
 
 Executed by: Foram
-Action: use database demo
-Message: PLease create database first!! As no such database exist in the system.
-Time: 12:26:30
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:35:09
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:26:50
+Action: insert
+Message: main thread  acquires the lock 
+Time: 08:35:13
 
 Executed by: Foram
-Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
-Message: Table successfully created.
-Time: 12:27:03
+Action: insert into student(id, name) values (1, "foram");
+Message: Duplicate value not allowed in primary key column.
+Time: 08:35:13
 
 Executed by: Foram
-Action: use database demo
-Message: PLease create database first!! As no such database exist in the system.
-Time: 12:31:41
+Action: insert
+Message: main releases the lock 
+Time: 08:35:13
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:31:51
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:37:07
 
 Executed by: Foram
-Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
-Message: Table successfully created.
-Time: 12:32:01
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:37:59
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 12:37:45
+Action: DELETE FROM student WHERE id=1;
+Message: Deleted successfully.
+Time: 08:37:59
 
 Executed by: Foram
-Action: CREATE TABLE STUDENT(id int not null, name varchar(40), primary key(id));
-Message: Table successfully created.
-Time: 12:37:49
+Action: delete
+Message: main releases the lock 
+Time: 08:37:59
 
 Executed by: Foram
-Action: insert into student(id,name) values (1,"est");
-Message: Invalid query
-Time: 12:55:57
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:38:28
 
 Executed by: Foram
-Action: insert into STUDENT(id,name) values (1,"test");
-Message: Invalid query
-Time: 12:57:25
+Action: DELETE FROM education
+Message: Invalid Query !
+Time: 08:38:28
 
 Executed by: Foram
-Action: INSERT INTO STUDENT(
-Message: Invalid query
-Time: 12:57:56
+Action: delete
+Message: main releases the lock 
+Time: 08:38:28
 
 Executed by: Foram
-Action: INSERT INTO STUDENT(id,name) values (1,"est");
-Message: Invalid query
-Time: 13:04:59
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:38:39
 
 Executed by: Foram
-Action: insert into STUDENT(id, name) values (1, "test");
-Message: 1 Row inserted.
-Time: 13:10:43
+Action: DELETE FROM education;
+Message: Failed to delete table education
+Time: 08:38:39
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:20:39
+Action: DELETE FROM education;
+Message: Deleted successfully.
+Time: 08:38:39
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:21:59
+Action: delete
+Message: main releases the lock 
+Time: 08:38:39
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:22:46
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:40:15
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:26:20
+Action: delete from education'
+Message: Invalid Query !
+Time: 08:40:15
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:31:28
+Action: delete
+Message: main releases the lock 
+Time: 08:40:15
 
 Executed by: Foram
-Action: use database demo;
-Message: You are working on database: DEMO
-Time: 13:33:57
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:40:28
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:40:28
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:41:37
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:41:37
+
+Executed by: Foram
+Action: use database final;
+Message: You are working on database: FINAL
+Time: 08:42:50
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:43:39
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:43:39
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:44:04
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:44:05
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:44:58
+
+Executed by: Foram
+Action: delete from student;
+Message: Table student Deleted Successfully !
+Time: 08:44:58
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:44:58
+
+Executed by: Foram
+Action: delete
+Message: main thread  acquires the lock 
+Time: 08:45:23
+
+Executed by: Foram
+Action: delete
+Message: main releases the lock 
+Time: 08:45:23
 

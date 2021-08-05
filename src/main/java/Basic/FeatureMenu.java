@@ -28,8 +28,7 @@ public class FeatureMenu {
                 System.out.println("2. SQL Dump");
                 System.out.println("3. Generate ERD");
                 System.out.println("4. Generate Database state");
-                System.out.println("5. Concurrent transaction");
-                System.out.println("6. Exit");
+                System.out.println("5. Exit");
                 System.out.print("Enter: ");
                 String userInput = scanner.nextLine();
                 switch (userInput) {
@@ -46,8 +45,11 @@ public class FeatureMenu {
                         }
                         break;
                     case "3":
-                        System.out.println(" ERD of DB : " + DATABASE_NAME);
-                        generateERD();
+                        if(DATABASE_NAME==null){
+                            System.out.println("Please select database first!!");
+                        }else{
+                            generateERD();
+                        }
                         break;
                     case "4":
                         if(DATABASE_NAME==null){
@@ -57,9 +59,6 @@ public class FeatureMenu {
                         }
                         break;
                     case "5":
-                        System.out.println(" Concurrent transaction " + DATABASE_NAME);
-                        break;
-                    case "6":
                         flag = false;
                         System.exit(0);
                         break;

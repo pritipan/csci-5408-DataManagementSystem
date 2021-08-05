@@ -9,8 +9,8 @@ id---------------->student(id)
 
 
 Columns :- 
+name varchar(45)
 id int
-type varchar(45)
 
 --------------------------------------------------
 
@@ -26,6 +26,5 @@ Nothing
 Columns :- 
 name varchar(45)
 id int (PK)
-email varchar(45)
 
 --------------------------------------------------

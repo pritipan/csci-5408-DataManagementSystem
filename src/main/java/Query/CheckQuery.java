@@ -31,7 +31,6 @@ public class CheckQuery {
                 releaseLock(lock, "select");
                 break;
             case "create":
-                //acquireLocks(lock, "create");
                 if(divideQuery[1].equals("database")){
                     if (!CreateSchemaParser(query)) {
                         display("Invalid Query !!");
@@ -45,7 +44,6 @@ public class CheckQuery {
                         logQueryExecute(query,"Please select database first!!");
                     }
                 }
-                //releaseLock(lock, "create");
                 break;
             case "use":
                 DATABASE_NAME = UseDatabase(query);
@@ -71,7 +69,6 @@ public class CheckQuery {
             case "update":
                 acquireLocks(lock, "update");
                 if (useDatabase) {
-                    System.out.println("UPDATE : " + divideQuery[0]);
                     UpdateParser(query);
                 } else {
                     display("Please select database first!!");
@@ -79,20 +76,9 @@ public class CheckQuery {
                 }
                 releaseLock(lock, "update");
                 break;
-            case "drop":
-                acquireLocks(lock, "drop");
-                if (useDatabase) {
-                    System.out.println("DROP : " + divideQuery[0]);
-                } else {
-                    display("Please select database first!!");
-                    logQueryExecute(query,"Please select database first!!");
-                }
-                releaseLock(lock, "drop");
-                break;
             case "delete":
                 acquireLocks(lock, "delete");
                 if (useDatabase) {
-                    System.out.println("DELETE : " + divideQuery[0]);
                     DeleteParser(query);
                 } else {
                     display("Please select database first!!");
@@ -103,7 +89,6 @@ public class CheckQuery {
             case "alter":
                 acquireLocks(lock, "alter");
                 if (useDatabase) {
-                    System.out.println("Alter : " + divideQuery[0]);
                     AlterParser(query);
                 } else {
                     display("Please select database first!!");

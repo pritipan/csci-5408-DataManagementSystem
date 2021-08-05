@@ -20,9 +20,7 @@ public  class Erd {
   static  DatabaseMeta  database = new DatabaseMeta();
 
   public static void generateERD() {
-//    DATABASE_NAME = "DEMO";
     database.loadDatabase();
-//    System.out.println(getAllRelations());
     String out = "";
 
     Map<String, String> relations =  getAllRelations();
@@ -75,13 +73,12 @@ public  class Erd {
             "\n"+foreignKey+"\n\nColumns :- \n"+columns+
             "\n--------------------------------------------------\n";
     }
-    System.out.println(out);
     try {
       FileWriter fWriter = new FileWriter("src/main/java/FileStorage/Database" +
           "/ERDiagram_" + DATABASE_NAME.trim().toUpperCase() + ".txt");
       fWriter.write(out);
       fWriter.close();
-      System.out.println("File is created successfully with the content.");
+      System.out.println("ERD created successfully");
     }
     catch (IOException e) {
       System.out.print(e.getMessage());
