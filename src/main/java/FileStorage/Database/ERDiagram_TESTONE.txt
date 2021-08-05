@@ -2,10 +2,10 @@
 ******************** Table : qwe ********************
 
 Cardinality :- 
-
+Nothing
 
 ForeignKey :- 
-
+Nothing
 
 Columns :- 
 name varchar(45)

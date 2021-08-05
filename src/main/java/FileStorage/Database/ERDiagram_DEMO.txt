@@ -2,14 +2,17 @@
 ******************** Table : student ********************
 
 Cardinality :- 
-student--1-----------1--grade
+student--1-----------N--student4
+student--1-----------1--student2
+student--N-----------1--grade
 
 ForeignKey :- 
-id---------------->grade(id)
+gradeId---------------->grade(id)
 
 
 Columns :- 
-name varchar(45)
+gradeId int
+name varchar(40)
 id int (PK)
 
 --------------------------------------------------
@@ -17,10 +20,11 @@ id int (PK)
 ******************** Table : student2 ********************
 
 Cardinality :- 
-Nothing
+student2--1-----------1--student
 
 ForeignKey :- 
-Nothing
+id---------------->student(id)
+
 
 Columns :- 
 name varchar(45)
@@ -31,8 +35,8 @@ id int (PK)
 ******************** Table : grade ********************
 
 Cardinality :- 
-grade--1-----------N--student1
-grade--1-----------1--student
+grade--1-----------N--student
+grade--1-----------N--student3
 
 
 ForeignKey :- 
@@ -44,30 +48,17 @@ type varchar(45)
 
 --------------------------------------------------
 
-******************** Table : student1 ********************
-
-Cardinality :- 
-student1--N-----------1--grade
-
-ForeignKey :- 
-id---------------->grade(id)
-
-
-Columns :- 
-name varchar(45)
-id int
-
---------------------------------------------------
-
 ******************** Table : student4 ********************
 
 Cardinality :- 
-Nothing
+student4--N-----------1--student
 
 ForeignKey :- 
-Nothing
+studentId---------------->student(id)
+
 
 Columns :- 
+studentId int
 name varchar(45)
 id int (PK)
 
@@ -76,12 +67,14 @@ id int (PK)
 ******************** Table : student3 ********************
 
 Cardinality :- 
-Nothing
+student3--N-----------1--grade
 
 ForeignKey :- 
-Nothing
+gradeId---------------->grade(id)
+
 
 Columns :- 
+gradeId int
 name123 varchar(45)
 name varchar(45)
 id int (PK)

@@ -1,6 +1,5 @@
-student || id int not null, name varchar(45) || id || fk:id:grade:id || fk:id:grade:id
 grade || id int not null, type varchar(45) || id
-student1 || id int, name varchar(45) || fk:id:grade:id
-student2 || id int not null, name varchar(45) || id
-student3 || id int not null, name varchar(45), name123 varchar(45) || id
-student4 || id int not null, name varchar(45) || id
+student2 || id int not null, name varchar(45) || id || fk:id:student:id
+student3 || id int not null, name varchar(45), name123 varchar(45), gradeId int || id || fk:gradeId:grade:id
+student4 || id int not null, name varchar(45), studentId int || id || fk:studentId:student:id
+student || id int not null, name varchar(40), gradeId int || id || fk:gradeId:grade:id

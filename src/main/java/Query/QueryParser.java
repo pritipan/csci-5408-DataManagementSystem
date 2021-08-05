@@ -21,23 +21,28 @@ public class QueryParser {
   public static void main(String[] arg) throws IOException {
     //CreateParser("create table student3(id int NOT NULL, name varchar(45), name123 varchar(45), PRIMARY KEY(id));", "demo");
     //InsertParser("insert into student(id, name) values (1, \"foram\");", "demo");
-    DATABASE_NAME = "DEMO";
+    DATABASE_NAME = "TESTONE";
 //    UseDatabase("use database DEMO;");
-//    UpateParser("UPDATE STUDENT SET name = one,id=2 where id = 7;");
-    AlterParser("alter table student add foreign key(name) references " +
-        "student3" +
-        "(id);");
+//    UpateParser("UPDATE qwe SET name = \"three\" WHERE name=\"one\";");
+    AlterParser("alter table student2 add foreign key(name) references "
+//        "student3" +
+//        "(id);");
+//      DeleteParser("DELETE FROM qwe WHERE name=\"three\" ; "
+          );
   }
 
   public static void CreateParser(String query) {
 
-    String createRegex = "CREATE TABLE\\s(\\w+)[(]((((\\w+)\\s(varchar[(]\\d+[)]|int)*\\s*(?:NOT\\sNULL)?)(,)*\\s*)+)(?:,\\sPRIMARY KEY[(](\\w+)[)])?[)];";
+    String createRegex = "CREATE TABLE\\s*(?<tableName>\\w+)\\((?<columns>(" +
+        "(\\w+\\s" +
+        "(varchar\\(\\d+\\)|int)\\s*(?:NOT NULL)?,?\\s*)+))(PRIMARY " +
+        "KEY\\((?<PK>\\w+)\\))?\\);";
     Pattern syntaxExp = Pattern.compile(createRegex, Pattern.CASE_INSENSITIVE);
     Matcher queryParts = syntaxExp.matcher(query);
     if (queryParts.find()) {
-      String tableName = queryParts.group(1);
-      String columns = queryParts.group(2);
-      String primaryKey = queryParts.group(8);
+      String tableName = queryParts.group("tableName");
+      String columns = queryParts.group("columns");
+      String primaryKey = queryParts.group("PK");
 
       if (tableName != null) {
         if (checkTableExist(tableName)) {
@@ -46,11 +51,11 @@ public class QueryParser {
         } else {
           columns = columns.toLowerCase();
 
-          List<String> columnMetaList = Arrays.asList(columns.split(", "));
+          List<String> columnMetaList = Arrays.asList(columns.trim().split(","));
           if (!columnMetaList.isEmpty()) {
             List<String> valuesPartTemp = new ArrayList<>();
             for (String col : columnMetaList) {
-              String[] temp = col.split(" ");
+              String[] temp = col.trim().split(" ");
               if (!valuesPartTemp.contains(temp[0].trim().toLowerCase())) {
                 valuesPartTemp.add(temp[0].trim().toLowerCase());
               } else {
@@ -65,7 +70,7 @@ public class QueryParser {
             } catch (IOException ioException) {
               ioException.printStackTrace();
             }
-            String tableMeta = tableName + " || " + columns;
+            String tableMeta = tableName + " || " + String.join(",",columnMetaList);
             if (primaryKey != null) {
               if (valuesPartTemp.contains(primaryKey.trim().toLowerCase())) {
                 tableMeta += " || " + primaryKey.trim().trim().toLowerCase();
@@ -122,7 +127,8 @@ public class QueryParser {
 
   static void InsertParser(String query) {
 
-    String insertRegex = "INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
+    String insertRegex = "(?!)INSERT INTO (\\w+)(\\((?:\\w+)(?:, \\w+)*\\))? " +
+        "VALUES (\\((?:(?:\"(\\w+)\"|\\d+))(?:, (?:\"(\\w+)\"|\\d+))*\\));";
     Pattern syntaxExp = Pattern.compile(insertRegex, Pattern.CASE_INSENSITIVE);
     Matcher queryParts = syntaxExp.matcher(query);
     if (queryParts.find()) {
@@ -201,9 +207,11 @@ public class QueryParser {
     }
   }
 
-   public static boolean UpateParser(String query) throws IOException {
+   public static boolean UpdateParser(String query) throws IOException {
 
-     String updateRegex = "UPDATE\\s+(?<tablename>\\w+)\\s+SET\\s+" + "(?<values>(\\w+\\s*=\\s*\\w+[,\\s]*)+)\\s+where\\s+(?<conditions>" + "(\\w+\\s*=\\s*\\w+[,\\s]*)*);?";
+     String updateRegex = "UPDATE\\s+(?<tablename>\\w+)\\s+SET\\s+" +
+         "(?<values>(\\w+\\s*=\\s*[\"\']?\\w+[\"\']?[,\\s]*)+)\\s+where\\s+" +
+         "(?<conditions>" + "(\\w+\\s*=\\s*[\"\']?\\w+[\"\']?[,\\s]*)*);?";
      Pattern syntaxExp = Pattern.compile(updateRegex, Pattern.CASE_INSENSITIVE);
      Matcher queryParts = syntaxExp.matcher(query);
      System.out.println(query);
@@ -242,7 +250,7 @@ public class QueryParser {
                return false;
              }
            }
-
+           System.out.println(flag);
            if (flag) {
              for (Map.Entry<String, String> updatePair : columnValuePair.entrySet()) {
                String updateColumnName = updatePair.getKey();
@@ -354,21 +362,123 @@ public class QueryParser {
     return result;
   }
 
-  public static String DeleteParser(String query) {
+  public static boolean DeleteParser(String query) throws IOException {
 
-    String deleteRegex = "";
+    String deleteRegex = "DELETE\\s+FROM\\s+(?<tablename>\\w+)\\s*(WHERE\\s" +
+        "(?<conditions>(\\w+\\s*(=|>=|<=|!=)\\s*[\"\']?\\w+[\"\']?[,\\s]*)*))" +
+        "?;";
+    String operators = "(?<operator>(=|>=|<=|!=))";
     Pattern syntaxExp = Pattern.compile(deleteRegex, Pattern.CASE_INSENSITIVE);
+    Pattern operatorExp = Pattern.compile(operators,
+        Pattern.CASE_INSENSITIVE);
     Matcher queryParts = syntaxExp.matcher(query);
     String result = "";
     String fileName = "";
+    boolean flag = false;
+//    System.out.println(queryParts.find());
     if (queryParts.find()) {
       String tableName = queryParts.group("tablename");
-
+      System.out.println(tableName);
       if (tableName != null && checkTableExist(tableName)) {
-        fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+        List<String> conditions = new ArrayList<>();
+        if(queryParts.group("conditions") != null){
+          String[] tempCondition = queryParts.group("conditions").split(",");
+         conditions = Arrays.asList(tempCondition);}
+
+        System.out.println(conditions);
+        if(conditions.size() == 0)
+        {
+          fileName =
+              "src/main/java/FileStorage/Database/METADATA_" + DATABASE_NAME.trim().toUpperCase() + ".txt";
+          List<String> rows = getAllRows(fileName);
+          for (String line : rows) {
+            String[] temp = line.split(" \\|\\|");
+            if(!tableName.equals(temp[0]))
+            {
+              result += line+"\n";
+            }
+          }
+          File myObj = new File("src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt");
+          if (myObj.delete()) {
+            System.out.println("Table " + tableName+" Deleted Successfully !");
+          } else {
+            System.out.println("Failed to delete table "+tableName);
+          }
+        }
+        else {
+          fileName = "src/main/java/FileStorage/Database/" + DATABASE_NAME.trim().toUpperCase() + "_" + tableName.trim().toUpperCase() + ".txt";
+          List<String> rows = getAllRows(fileName);
+          for (String line : rows) {
+            String[] temp = line.split(" \\|\\|");
+            Map<String, String> rowData = convertToMap(Arrays.asList(temp), ":");
+            if (conditions.size() == 0)
+              flag = true;
+            else
+              flag = false;
+            for (String condition : conditions) {
+              Matcher conditionParts = operatorExp.matcher(condition);
+              String operator = null;
+              if (conditionParts.find()) {
+                operator = conditionParts.group("operator");
+                System.out.println(operator);
+                String conditionKey = condition.split(operator)[0].trim();
+                String conditionValue = condition.split(operator)[1].trim();
+                if (rowData.containsKey(conditionKey)) {
+                  switch (operator) {
+                    case "=":
+                      if (rowData.get(conditionKey).equals(conditionValue))
+                        flag = true;
+                      break;
+                    case "!=":
+                      if (!rowData.get(conditionKey).equals(conditionValue))
+                        flag = true;
+                      break;
+                    case ">":
+                      if (Double.parseDouble(rowData.get(conditionKey)) > Double.parseDouble(conditionValue))
+                        flag = true;
+                      break;
+                    case "<":
+                      if (Double.parseDouble(rowData.get(conditionKey)) < Double.parseDouble(conditionValue))
+                        flag = true;
+                      break;
+                    case ">=":
+                      if (Double.parseDouble(rowData.get(conditionKey)) >= Double.parseDouble(conditionValue))
+                        flag = true;
+                      break;
+                    case "<=":
+                      if (Double.parseDouble(rowData.get(conditionKey)) <= Double.parseDouble(conditionValue))
+                        flag = true;
+                      break;
+                    default:
+                      flag = false;
+
+                  }
+                } else {
+                  System.out.println("Invalid Condition " + conditionKey + "=" + conditionValue + " !");
+                  return false;
+                }
+              }
+            }
+            if (!flag) {
+              result += mapToString(rowData) + "\n";
+            }
+          }
+        }
+        System.out.println(result);
+        try {
+          FileWriter fWriter = new FileWriter(fileName);
+          fWriter.write(result);
+          fWriter.close();
+          System.out.println("File is created successfully with the content.");
+        } catch (IOException e) {
+          System.out.print(e.getMessage());
+        }
 
       }
-    } return null;
+    } else {
+      System.out.println("Invalid Query !");
+    }
+    return true;
   }
 
   public static String UseDatabase(String query) {
@@ -400,6 +510,7 @@ public class QueryParser {
           String refTableName = queryParts.group(3).trim().toLowerCase();
           if (checkTableExist(refTableName)) {
             String pk = getPrimaryKey(refTableName);
+            System.out.println(pk);
             if (pk != null) {
               String refColName = queryParts.group(4).trim().toLowerCase();
               if (pk.equals(refColName)) {
