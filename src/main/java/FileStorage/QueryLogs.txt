@@ -103,3 +103,518 @@ Action: delete
 Message: main releases the lock 
 Time: 15:10:56
 
+Executed by: priti
+Action: create database finaldemo;
+Message: Database finaldemo created successfully.
+Time: 01:12:31
+
+Executed by: priti
+Action: create table student(id int NOT NULL, name varchar(45), PRIMARY KEY(id));
+Message: Table successfully created.
+Time: 01:13:00
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:20:08
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:20:08
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:20:26
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:20:26
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:22:20
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:22:20
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:22:47
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "foram");
+Message: 1 Row inserted.
+Time: 01:22:47
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:22:47
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:26:17
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:26:17
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:26:54
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "foram");
+Message: 1 Row inserted.
+Time: 01:26:54
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:26:54
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:27:54
+
+Executed by: priti
+Action: insert into student(id, name) values (2, "priti");
+Message: 1 Row inserted.
+Time: 01:27:54
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:27:54
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:28:32
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "neelay");
+Message: Duplicate value not allowed in primary key column.
+Time: 01:28:32
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:28:32
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:28:50
+
+Executed by: priti
+Action: insert into student(id, name) values (3, "neelay");
+Message: 1 Row inserted.
+Time: 01:28:50
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:28:50
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:30:18
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:30:18
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:30:39
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:30:39
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:30:58
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:30:58
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:35:25
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:35:25
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:40:30
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:40:30
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:42:47
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:42:47
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:43:18
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "foram");
+Message: 1 Row inserted.
+Time: 01:43:18
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:43:18
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:44:01
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "Priti");
+Message: Duplicate value not allowed in primary key column.
+Time: 01:44:01
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:44:01
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:44:21
+
+Executed by: priti
+Action: insert into student(id, name) values (2, "priti");
+Message: 1 Row inserted.
+Time: 01:44:21
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:44:21
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:44:44
+
+Executed by: priti
+Action: insert into student(id, name) values (3, "neelay");
+Message: 1 Row inserted.
+Time: 01:44:44
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:44:44
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:45:32
+
+Executed by: priti
+Action: insert student(id, name) values (4, "foram");
+Message: Invalid query
+Time: 01:45:32
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:45:32
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:47:09
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:47:09
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:47:38
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:47:38
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:48:14
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:48:14
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:48:59
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:48:59
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 01:49:30
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 01:49:30
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:57:55
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:57:55
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:58:28
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "foram");
+Message: 1 Row inserted.
+Time: 01:58:28
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:58:28
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:59:20
+
+Executed by: priti
+Action: insert into student(id, name) values (1, "Priti");
+Message: Duplicate value not allowed in primary key column.
+Time: 01:59:20
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:59:20
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 01:59:51
+
+Executed by: priti
+Action: insert into student(id, name) values (2, "priti");
+Message: 1 Row inserted.
+Time: 01:59:51
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 01:59:51
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 02:00:17
+
+Executed by: priti
+Action: insert into student(id, name) values (3, "neelay");
+Message: 1 Row inserted.
+Time: 02:00:17
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 02:00:17
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 02:01:03
+
+Executed by: priti
+Action: insert student(id, name) values (1, "foram");
+Message: Invalid query
+Time: 02:01:03
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 02:01:03
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 02:02:51
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 02:02:51
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 02:03:47
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 02:03:47
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 02:04:35
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 02:04:35
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 02:05:14
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 02:05:14
+
+Executed by: priti
+Action: select
+Message: main thread  acquires the lock 
+Time: 02:06:07
+
+Executed by: priti
+Action: select
+Message: main releases the lock 
+Time: 02:06:07
+
+Executed by: priti
+Action: 5
+Message: Invalid Query !!
+Time: 03:16:21
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 05:08:18
+
+Executed by: priti
+Action: insert into student(id, name) values (4, "Alex");
+Message: 1 Row inserted.
+Time: 05:08:19
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 05:08:19
+
+Executed by: priti
+Action: delete
+Message: main thread  acquires the lock 
+Time: 05:09:59
+
+Executed by: priti
+Action: delete
+Message: main releases the lock 
+Time: 05:09:59
+
+Executed by: priti
+Action: insert
+Message: main thread  acquires the lock 
+Time: 05:13:11
+
+Executed by: priti
+Action: insert into student(id, name) values (4, "Alex");
+Message: 1 Row inserted.
+Time: 05:13:11
+
+Executed by: priti
+Action: insert
+Message: main releases the lock 
+Time: 05:13:11
+
+Executed by: priti
+Action: delete
+Message: main thread  acquires the lock 
+Time: 05:15:13
+
+Executed by: priti
+Action: delete
+Message: main releases the lock 
+Time: 05:15:13
+
+Executed by: priti
+Action: update
+Message: main thread  acquires the lock 
+Time: 05:16:07
+
+Executed by: priti
+Action: update student set name=Foram where id=4;
+Message: Update done successfully.
+Time: 05:16:07
+
+Executed by: priti
+Action: update
+Message: main releases the lock 
+Time: 05:16:07
+
