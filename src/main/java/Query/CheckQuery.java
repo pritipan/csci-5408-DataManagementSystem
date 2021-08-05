@@ -16,7 +16,6 @@ public class CheckQuery {
         switch (divideQuery[0]) {
             case "select":
                 if (useDatabase) {
-                    System.out.println(divideQuery[0]);
                     if (selectQueryParser(query)) {
                     } else {
                         display("Invalid Query !!");
