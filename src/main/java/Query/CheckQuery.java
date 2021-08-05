@@ -31,7 +31,7 @@ public class CheckQuery {
                 releaseLock(lock, "select");
                 break;
             case "create":
-                acquireLocks(lock, "create");
+                //acquireLocks(lock, "create");
                 if(divideQuery[1].equals("database")){
                     if (!CreateSchemaParser(query)) {
                         display("Invalid Query !!");
@@ -45,7 +45,7 @@ public class CheckQuery {
                         logQueryExecute(query,"Please select database first!!");
                     }
                 }
-                releaseLock(lock, "create");
+                //releaseLock(lock, "create");
                 break;
             case "use":
                 DATABASE_NAME = UseDatabase(query);

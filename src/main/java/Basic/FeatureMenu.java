@@ -3,6 +3,7 @@ package Basic;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static Basic.DatabaseState.generateDbState;
 import static Basic.Login.USERNAME;
 import static Basic.SqlDump.generateDump;
 import static Query.CheckQuery.checkType;
@@ -49,7 +50,11 @@ public class FeatureMenu {
                         generateERD();
                         break;
                     case "4":
-                        System.out.println(" STATE of DB : " + DATABASE_NAME);
+                        if(DATABASE_NAME==null){
+                            System.out.println("Please select database first!!");
+                        }else{
+                            generateDbState();
+                        }
                         break;
                     case "5":
                         System.out.println(" Concurrent transaction " + DATABASE_NAME);

@@ -333,3 +333,163 @@ Action: select
 Message: main releases the lock
 Time: 14:53:46
 
+Executed by: testuser
+Action: create
+Message: main thread  acquires the lock 
+Time: 06:53:54
+
+Executed by: testuser
+Action: create database finaldemo;
+Message: Database finaldemo created successfully.
+Time: 06:53:55
+
+Executed by: testuser
+Action: create
+Message: main releases the lock 
+Time: 06:53:55
+
+Executed by: testuser
+Action: use database finaldemo;
+Message: You are working on database: FINALDEMO
+Time: 06:55:04
+
+Executed by: testuser
+Action: create
+Message: main thread  acquires the lock 
+Time: 07:00:21
+
+Executed by: testuser
+Action: create table student(id int NOT NULL, name varchar(45), name varchar(45), PRIMARY KEY(id));
+Message: Column name should not be same.
+Time: 07:00:21
+
+Executed by: testuser
+Action: create
+Message: main releases the lock 
+Time: 07:00:21
+
+Executed by: testuser
+Action: create
+Message: main thread  acquires the lock 
+Time: 07:00:51
+
+Executed by: testuser
+Action: create table student(id int NOT NULL, name varchar(45), email varchar(45), PRIMARY KEY(id));
+Message: Table successfully created.
+Time: 07:00:51
+
+Executed by: testuser
+Action: create
+Message: main releases the lock 
+Time: 07:00:51
+
+Executed by: testuser
+Action: insert
+Message: main thread  acquires the lock 
+Time: 07:01:41
+
+Executed by: testuser
+Action: insert into student(id, name, email) values (1, "foram", "foram@gmail.com");
+Message: Invalid query
+Time: 07:01:41
+
+Executed by: testuser
+Action: insert
+Message: main releases the lock 
+Time: 07:01:41
+
+Executed by: testuser
+Action: insert
+Message: main thread  acquires the lock 
+Time: 07:02:05
+
+Executed by: testuser
+Action: insert into student(id, name) values (1, "foram");
+Message: 1 Row inserted.
+Time: 07:02:06
+
+Executed by: testuser
+Action: insert
+Message: main releases the lock 
+Time: 07:02:06
+
+Executed by: testuser
+Action: insert
+Message: main thread  acquires the lock 
+Time: 07:03:20
+
+Executed by: testuser
+Action: insert into student(id, name, email) values (1, "foram", "foram@gmail");
+Message: Invalid query
+Time: 07:03:20
+
+Executed by: testuser
+Action: insert
+Message: main releases the lock 
+Time: 07:03:20
+
+Executed by: testuser
+Action: insert
+Message: main thread  acquires the lock 
+Time: 07:03:46
+
+Executed by: testuser
+Action: insert into student(id, name, email) values (1, "foram", foram);
+Message: Invalid query
+Time: 07:03:46
+
+Executed by: testuser
+Action: insert
+Message: main releases the lock 
+Time: 07:03:46
+
+Executed by: testuser
+Action: select
+Message: main thread  acquires the lock 
+Time: 07:05:40
+
+Executed by: testuser
+Action: select
+Message: main releases the lock 
+Time: 07:05:40
+
+Executed by: testuser
+Action: select
+Message: main thread  acquires the lock 
+Time: 07:06:11
+
+Executed by: testuser
+Action: select
+Message: main releases the lock 
+Time: 07:06:11
+
+Executed by: testuser
+Action: select
+Message: main thread  acquires the lock 
+Time: 07:06:51
+
+Executed by: testuser
+Action: select
+Message: main releases the lock 
+Time: 07:06:51
+
+Executed by: testuser
+Action: select
+Message: main thread  acquires the lock 
+Time: 07:07:13
+
+Executed by: testuser
+Action: select
+Message: main releases the lock 
+Time: 07:07:13
+
+Executed by: testuser
+Action: select
+Message: main thread  acquires the lock 
+Time: 07:07:34
+
+Executed by: testuser
+Action: select
+Message: main releases the lock 
+Time: 07:07:34
+
