@@ -1,5 +1,0 @@
-student || id int not null, name varchar(45) || id
-grade || id int not null, type varchar(45) || id
-student1 || id int, name varchar(45)
-student2 || id int not null, name varchar(45) || id
-student3 || id int not null, name varchar(45), name123 varchar(45) || id

@@ -1,0 +1,89 @@
+
+******************** Table : student ********************
+
+Cardinality :- 
+student--1-----------1--grade
+
+ForeignKey :- 
+id---------------->grade(id)
+
+
+Columns :- 
+name varchar(45)
+id int (PK)
+
+--------------------------------------------------
+
+******************** Table : student2 ********************
+
+Cardinality :- 
+Nothing
+
+ForeignKey :- 
+Nothing
+
+Columns :- 
+name varchar(45)
+id int (PK)
+
+--------------------------------------------------
+
+******************** Table : grade ********************
+
+Cardinality :- 
+grade--1-----------N--student1
+grade--1-----------1--student
+
+
+ForeignKey :- 
+Nothing
+
+Columns :- 
+id int (PK)
+type varchar(45)
+
+--------------------------------------------------
+
+******************** Table : student1 ********************
+
+Cardinality :- 
+student1--N-----------1--grade
+
+ForeignKey :- 
+id---------------->grade(id)
+
+
+Columns :- 
+name varchar(45)
+id int
+
+--------------------------------------------------
+
+******************** Table : student4 ********************
+
+Cardinality :- 
+Nothing
+
+ForeignKey :- 
+Nothing
+
+Columns :- 
+name varchar(45)
+id int (PK)
+
+--------------------------------------------------
+
+******************** Table : student3 ********************
+
+Cardinality :- 
+Nothing
+
+ForeignKey :- 
+Nothing
+
+Columns :- 
+name123 varchar(45)
+name varchar(45)
+id int (PK)
+
+--------------------------------------------------
